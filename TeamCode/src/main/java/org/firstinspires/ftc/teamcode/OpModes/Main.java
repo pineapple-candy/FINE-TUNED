@@ -5,20 +5,24 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Drivebase;
+import org.firstinspires.ftc.teamcode.Transfer;
 import org.firstinspires.ftc.teamcode.Util.Constants;
 
 @TeleOp(name="Main")
 public class Main extends LinearOpMode {
 
     private Drivebase drivebase;
+    private Transfer transfer;
 
     @Override
     public void runOpMode() {
-        drivebase.initDrivebase(hardwareMap);
+        drivebase = new Drivebase(hardwareMap);
+        transfer = new Transfer(hardwareMap);
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
-            drivebase.drive(gamepad1.left_stick_x, -gamepad1.left_stick_y, gamepad1.right_stick_x);
+            drivebase.update(gamepad1,gamepad2);
+            transfer.update(gamepad1);
         }
 
     }

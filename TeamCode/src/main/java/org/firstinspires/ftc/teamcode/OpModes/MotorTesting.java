@@ -14,6 +14,9 @@ public class MotorTesting extends LinearOpMode {
     private DcMotor RFMotor;
     private DcMotor RBMotor;
 
+    private DcMotor Intake1;
+    private DcMotor Intake2;
+
 
     @Override
     public void runOpMode() {
@@ -21,6 +24,10 @@ public class MotorTesting extends LinearOpMode {
         LBMotor = hardwareMap.get(DcMotor.class, Constants.LB_DRIVE.getMotorName());
         RFMotor = hardwareMap.get(DcMotor.class, Constants.RF_DRIVE.getMotorName());
         RBMotor = hardwareMap.get(DcMotor.class, Constants.RB_DRIVE.getMotorName());
+
+        Intake1 = hardwareMap.get(DcMotor.class, Constants.INTAKE1.getMotorName());
+        Intake2 = hardwareMap.get(DcMotor.class, Constants.INTAKE2.getMotorName());
+
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested()) {
@@ -37,6 +44,17 @@ public class MotorTesting extends LinearOpMode {
                 LBMotor.setPower(0);
                 RFMotor.setPower(0);
                 RBMotor.setPower(0);
+            }
+
+            if (gamepad1.left_bumper) {
+                Intake1.setPower(1);
+                Intake2.setPower(1);
+            } else if (gamepad1.right_bumper) {
+                Intake1.setPower(-1);
+                Intake2.setPower(-1);
+            } else {
+                Intake1.setPower(0);
+                Intake2.setPower(0);
             }
         }
     }
