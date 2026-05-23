@@ -39,4 +39,8 @@ public class Constants {
             .setReversed()
             .build();
 
+    public static final ServoProfile STOPPER = new ServoProfile.ServoProfileBuilder()
+            .setServoName("Stopper")
+            .build();
+
 }

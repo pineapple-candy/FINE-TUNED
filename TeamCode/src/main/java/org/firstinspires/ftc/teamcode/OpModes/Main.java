@@ -2,11 +2,9 @@ package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
-import org.firstinspires.ftc.teamcode.Drivebase;
-import org.firstinspires.ftc.teamcode.Transfer;
-import org.firstinspires.ftc.teamcode.Util.Constants;
+import org.firstinspires.ftc.teamcode.Subsystems.Drivebase;
+import org.firstinspires.ftc.teamcode.Subsystems.Transfer;
 
 @TeleOp(name="Main")
 public class Main extends LinearOpMode {
