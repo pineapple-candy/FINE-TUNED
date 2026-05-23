@@ -43,4 +43,13 @@ public class Constants {
             .setServoName("Stopper")
             .build();
 
+    public static final MotorProfile SHOOTER1 = new MotorProfile.MotorProfileBuilder()
+            .setMotorName("S1")
+            .build();
+
+    public static final MotorProfile SHOOTER2 = new MotorProfile.MotorProfileBuilder()
+            .setMotorName("S2")
+            .setReversed()
+            .build();
+
 }
