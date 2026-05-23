@@ -27,9 +27,11 @@ public class ServoTesting extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             if (toggleLeft.runToggle(gamepad1.left_bumper)) {
                 position += 0.03;
+                stopper.setPosition(position);
             }
             if (toggleRight.runToggle(gamepad1.right_bumper)) {
                 position -= 0.03;
+                stopper.setPosition(position);
             }
 
             telemetry.addLine("POSITION: " + position);

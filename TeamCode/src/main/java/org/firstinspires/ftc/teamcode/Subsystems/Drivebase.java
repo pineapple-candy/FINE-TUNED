@@ -97,4 +97,86 @@ public class Drivebase {
 
         drive(stickX, stickY, rotation);
     }
+
+//    // AUTONOMOUS MODES
+//    private static final double TICKS_PER_ROTATION = 288.375;
+//    private static final double WHEEL_DIAMETER = 9.6; // in cm
+//
+//    public void resetMecanumEncoder() {
+//        resetEncoder(LFName);
+//        resetEncoder(LBName);
+//        resetEncoder(RFName);
+//        resetEncoder(RBName);
+//    }
+//
+//    public void straight(double speed) {
+//        powerMotors(speed);
+//    }
+//
+//    public void strafe(double speed) { // RIGHT = positive, LEFT = negative
+//        powerMotor(LFName,speed);
+//        powerMotor(RFName,-speed);
+//        powerMotor(LBName,-speed);
+//        powerMotor(RBName,speed);
+//    }
+//
+//    public void rotate(double speed) { // POS: clockwise
+//        powerMotor(LFName,speed);
+//        powerMotor(RFName,-speed);
+//        powerMotor(LBName,speed);
+//        powerMotor(RBName,-speed);
+//    }
+//
+//    public void powerStop() {
+//        powerMotor(LFName,0);
+//        powerMotor(RFName,0);
+//        powerMotor(LBName,0);
+//        powerMotor(RBName,0);
+//    }
+//
+//    public boolean moveDistance(double cm, double speedMultiplier) {
+//        double circumfrence = (WHEEL_DIAMETER)*(Math.PI);
+//        double rotations = getMotor(Util.RB_DRIVE_NAME).getCurrentPosition()/TICKS_PER_ROTATION;
+//        double distanceTravelled = Math.abs(circumfrence * rotations);
+//
+//        double absoluteDistance = Math.abs(cm);
+//
+//        double distanceTravelledRatio = 1-(distanceTravelled/absoluteDistance);
+//
+//        if (distanceTravelled < absoluteDistance) {
+//            if (cm >= 0) {
+//                straight(Math.max(0.3,distanceTravelledRatio*speedMultiplier));
+//            } else {
+//                straight(-Math.max(0.3,distanceTravelledRatio*speedMultiplier));
+//            }
+//            return (true);
+//        } else {
+//            powerStop();
+//            resetMecanumEncoder();
+//            return (false);
+//        }
+//    }
+//
+//    public boolean strafeDistance(double cm, double speedMultiplier) {
+//        double circumfrence = (WHEEL_DIAMETER)*(Math.PI);
+//        double rotations = getMotor(Util.RB_DRIVE_NAME).getCurrentPosition()/TICKS_PER_ROTATION;
+//        double distanceTravelled = Math.abs(circumfrence * rotations);
+//
+//        double absoluteDistance = Math.abs(cm);
+//
+//        double distanceTravelledRatio = 1-(distanceTravelled/absoluteDistance);
+//
+//        if (distanceTravelled < absoluteDistance) {
+//            if (cm >= 0) {
+//                strafe(Math.max(0.44,distanceTravelledRatio*speedMultiplier));
+//            } else {
+//                strafe(-Math.max(0.44,distanceTravelledRatio*speedMultiplier));
+//            }
+//            return (true);
+//        } else {
+//            powerStop();
+//            resetMecanumEncoder();
+//            return (false);
+//        }
+//    }
 }
