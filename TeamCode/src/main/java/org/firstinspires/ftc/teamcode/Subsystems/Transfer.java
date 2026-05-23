@@ -12,8 +12,8 @@ public class Transfer {
     private DcMotor intake2;
     private Servo stopper;
 
-    private static final double STOP_DOWN = 0.4;
-    private static final double STOP_UP = 0.5;
+    private static final double STOP_DOWN = 0.123;
+    private static final double STOP_UP = 0.4;
 
     public Transfer(HardwareMap hardwareMap) {
         intake1 = hardwareMap.get(DcMotor.class, INTAKE1.getMotorName());
@@ -25,6 +25,7 @@ public class Transfer {
         intake2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         stopper = hardwareMap.get(Servo.class, STOPPER.getServoName());
+        stopper.setPosition(STOP_DOWN);
     }
 
     public void update(Gamepad gamepad) {
@@ -43,7 +44,7 @@ public class Transfer {
             stopper.setPosition(STOP_UP);
         }
         if (gamepad.right_trigger > 0.05) {
-            stopper.setPosition(STOP_UP);
+            stopper.setPosition(STOP_DOWN);
         }
     }
 }
