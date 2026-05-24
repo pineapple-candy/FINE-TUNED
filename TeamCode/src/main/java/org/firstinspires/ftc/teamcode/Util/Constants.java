@@ -21,7 +21,7 @@ public class Constants {
             .setReversed()
             .build();
 
-    public static final MotorProfile RF_DRIVE = new MotorProfile.MotorProfileBuilder()
+    public static final MotorProfile RF_DRIVE = new MotorProfile.MotorProfileBuilder() // this is connected to the encoder
             .setMotorName("RF")
             .build();
 

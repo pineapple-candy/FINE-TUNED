@@ -98,6 +98,11 @@ public class Drivebase {
         drive(stickX, stickY, rotation);
     }
 
+    public void resetEncoders() {
+        RF.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        RF.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
 //    // AUTONOMOUS MODES
 //    private static final double TICKS_PER_ROTATION = 288.375;
 //    private static final double WHEEL_DIAMETER = 9.6; // in cm

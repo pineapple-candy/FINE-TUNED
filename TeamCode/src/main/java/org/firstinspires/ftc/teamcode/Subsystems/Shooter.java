@@ -26,7 +26,7 @@ public class Shooter {
     public void update(Gamepad gamepad) {
         if (gamepad.left_trigger > 0.05) {
             shoot(1);
-        } else if (gamepad.right_trigger > 0.05) {
+        } else if (gamepad.x) {
             shoot(-1);
         } else {
             shoot(0);
