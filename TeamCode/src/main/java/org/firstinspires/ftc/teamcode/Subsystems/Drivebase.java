@@ -54,7 +54,7 @@ public class Drivebase {
     }
 
     private void drive(double stickX, double stickY, double rotation) {
-        double y = -stickY;
+        double y = stickY;
         double x = stickX;
         double rx = rotation;
 
