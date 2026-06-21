@@ -12,7 +12,7 @@ public class Drivebase {
     private DcMotor leftBack;
     private DcMotor rightBack;
 
-    private static double SPEED_MULTIPLIER = 0.7;
+    private static double MAX_SPEED = 0.7;
 
     public Drivebase(HardwareMap hardwareMap) {
         //Initialise the motors
@@ -54,26 +54,50 @@ public class Drivebase {
     }
 
     private void drive(double stickX, double stickY, double rotation) {
-        double y = stickY; // Remember, Y stick value is reversed
-        double x = stickX * 1.1; // Counteract imperfect strafing
+        double y = -stickY;
+        double x = stickX;
         double rx = rotation;
 
-        // Denominator is the largest motor power (absolute value) or 1
-        // This ensures all the powers maintain the same ratio,
-        // but only if at least one is out of the range [-1, 1]
-        double denominator = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double frontLeftPower = (y + x + rx) / denominator;
-        double backLeftPower = (y - x + rx) / denominator;
-        double frontRightPower = (y - x - rx) / denominator;
-        double backRightPower = (y + x - rx) / denominator;
+        double magnitude = Math.hypot(x, y);
 
-        this.leftFront.setPower(frontLeftPower*SPEED_MULTIPLIER);
-        this.leftBack.setPower(backLeftPower*SPEED_MULTIPLIER);
-        this.rightFront.setPower(frontRightPower*SPEED_MULTIPLIER);
-        this.rightBack.setPower(backRightPower*SPEED_MULTIPLIER);
+        if (magnitude > 1.0) {
+            x /= magnitude;
+            y /= magnitude;
+            magnitude = 1.0;
+        }
+
+        if (magnitude > 0.05) {
+            double angle = Math.atan2(y, x);
+
+            x = Math.cos(angle) * magnitude * MAX_SPEED;
+            y = Math.sin(angle) * magnitude * MAX_SPEED;
+        }
+
+        double frontLeftPower = y + x + rx;
+        double backLeftPower = y - x + rx;
+        double frontRightPower = y - x - rx;
+        double backRightPower = y + x - rx;
+
+        double max = Math.max(
+                Math.max(Math.abs(frontLeftPower), Math.abs(backLeftPower)),
+                Math.max(Math.abs(frontRightPower), Math.abs(backRightPower))
+        );
+
+        if (max > 1.0) {
+            frontLeftPower /= max;
+            backLeftPower /= max;
+            frontRightPower /= max;
+            backRightPower /= max;
+        }
+
+        this.leftFront.setPower(frontLeftPower);
+        this.leftBack.setPower(backLeftPower);
+        this.rightFront.setPower(frontRightPower);
+        this.rightBack.setPower(backRightPower);
     }
 
     public void update(Gamepad gamepad1, Gamepad gamepad2) {
+
         // === DRIVER 1 INPUTS ===
         double stickX1 = gamepad1.left_stick_x;
         double stickY1 = -gamepad1.left_stick_y;
@@ -96,6 +120,7 @@ public class Drivebase {
         rotation /= max;
 
         drive(stickX, stickY, rotation);
+
     }
 
 //    // AUTONOMOUS MODES
