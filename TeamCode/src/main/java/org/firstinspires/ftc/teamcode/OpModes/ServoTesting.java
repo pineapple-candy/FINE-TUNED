@@ -19,7 +19,7 @@ public class ServoTesting extends LinearOpMode {
         stopper = hardwareMap.get(Servo.class, Constants.STOPPER.getServoName());
         toggleLeft = new Toggle();
         toggleRight = new Toggle();
-        double position = 0.5;
+        double position = 0.123;
 
         waitForStart();
         stopper.setPosition(position);
@@ -27,6 +27,7 @@ public class ServoTesting extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             if (toggleLeft.runToggle(gamepad1.left_bumper)) {
                 position += 0.03;
+                
                 stopper.setPosition(position);
             }
             if (toggleRight.runToggle(gamepad1.right_bumper)) {

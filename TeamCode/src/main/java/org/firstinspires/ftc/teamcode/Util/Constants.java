@@ -12,21 +12,21 @@ public class Constants {
 
     // Mecanum Drive
     public static final MotorProfile LF_DRIVE = new MotorProfile.MotorProfileBuilder()
-            .setMotorName("LF")
+            .setMotorName("leftFront")
             .setReversed()
             .build();
 
     public static final MotorProfile LB_DRIVE = new MotorProfile.MotorProfileBuilder()
-            .setMotorName("LB")
+            .setMotorName("leftBack")
             .setReversed()
             .build();
 
     public static final MotorProfile RF_DRIVE = new MotorProfile.MotorProfileBuilder()
-            .setMotorName("RF")
+            .setMotorName("rightFront")
             .build();
 
     public static final MotorProfile RB_DRIVE = new MotorProfile.MotorProfileBuilder()
-            .setMotorName("RB")
+            .setMotorName("rightBack")
 //            .setReversed()
             .build();
 

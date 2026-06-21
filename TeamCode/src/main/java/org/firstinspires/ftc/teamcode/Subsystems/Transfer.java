@@ -6,16 +6,19 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 public class Transfer {
     private DcMotor intake1;
     private DcMotor intake2;
     private Servo stopper;
-
+    private Shooter shooter;
+    private ElapsedTime timer = new ElapsedTime();
     private static final double STOP_DOWN = 0.123;
     private static final double STOP_UP = 0.4;
 
     public Transfer(HardwareMap hardwareMap) {
+        shooter= new Shooter(hardwareMap);
         intake1 = hardwareMap.get(DcMotor.class, INTAKE1.getMotorName());
         intake1.setDirection(INTAKE1.getDirection());
         intake1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -29,9 +32,20 @@ public class Transfer {
     }
 
     public void update(Gamepad gamepad) {
-        if (gamepad.right_bumper) { // intake
+       if(gamepad.right_bumper&&stopper.getPosition()==0.40){
+            if (timer.seconds()>4){
+                timer.reset();
+            }
+            if(shooter.getRPM()>-4650){
+                intake1.setPower(0.0);
+                intake2.setPower(0.0);
+            } else {
+                intake1.setPower(1);
+                intake2.setPower(1);
+           }
+       } else if (gamepad.right_bumper) { // intake
             intake1.setPower(1);
-            intake2.setPower(1);
+            intake2.setPower(0.4);
         } else if (gamepad.left_bumper) { // outtake
             intake1.setPower(-1);
             intake2.setPower(-1);
@@ -43,7 +57,7 @@ public class Transfer {
         if (gamepad.left_trigger > 0.05) {
             stopper.setPosition(STOP_UP);
         }
-        if (gamepad.right_trigger > 0.05) {
+        else {
             stopper.setPosition(STOP_DOWN);
         }
     }

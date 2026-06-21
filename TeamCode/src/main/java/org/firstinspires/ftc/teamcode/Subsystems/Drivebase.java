@@ -7,45 +7,45 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Drivebase {
-    private DcMotor LF;
-    private DcMotor RF;
-    private DcMotor LB;
-    private DcMotor RB;
+    private DcMotor leftFront;
+    private DcMotor rightFront;
+    private DcMotor leftBack;
+    private DcMotor rightBack;
 
     private static double SPEED_MULTIPLIER = 0.7;
 
     public Drivebase(HardwareMap hardwareMap) {
         //Initialise the motors
-        this.LF = hardwareMap.get(DcMotor.class, LF_DRIVE.getMotorName());
-        this.RF = hardwareMap.get(DcMotor.class, RF_DRIVE.getMotorName());
-        this.LB = hardwareMap.get(DcMotor.class, LB_DRIVE.getMotorName());
-        this.RB = hardwareMap.get(DcMotor.class, RB_DRIVE.getMotorName());
+        this.leftFront = hardwareMap.get(DcMotor.class, LF_DRIVE.getMotorName());
+        this.rightFront = hardwareMap.get(DcMotor.class, RF_DRIVE.getMotorName());
+        this.leftBack = hardwareMap.get(DcMotor.class, LB_DRIVE.getMotorName());
+        this.rightBack = hardwareMap.get(DcMotor.class, RB_DRIVE.getMotorName());
 
         //Set direction
-        this.LF.setDirection(LF_DRIVE.getDirection());
-        this.LB.setDirection(LB_DRIVE.getDirection());
-        this.RF.setDirection(RF_DRIVE.getDirection());
-        this.RB.setDirection(RB_DRIVE.getDirection());
+        this.leftFront.setDirection(LF_DRIVE.getDirection());
+        this.leftBack.setDirection(LB_DRIVE.getDirection());
+        this.rightFront.setDirection(RF_DRIVE.getDirection());
+        this.rightBack.setDirection(RB_DRIVE.getDirection());
 
-        this.LF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.LB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.RF.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        this.RB.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
     public void setMotorSpeeds(double LFSpeed, double RFSpeed, double LBSpeed, double RBSpeed) {
         // Method for control of individual motors
-        LF.setPower(LFSpeed);
-        RF.setPower(RFSpeed);
-        LB.setPower(LBSpeed);
-        RB.setPower(RBSpeed);
+        leftFront.setPower(LFSpeed);
+        rightFront.setPower(RFSpeed);
+        leftBack.setPower(LBSpeed);
+        rightBack.setPower(RBSpeed);
     }
 
     public void powerMotors(double power) {
-        LF.setPower(power);
-        RF.setPower(power);
-        LB.setPower(power);
-        RB.setPower(power);
+        leftFront.setPower(power);
+        rightFront.setPower(power);
+        leftBack.setPower(power);
+        rightBack.setPower(power);
     }
 
     public void resetEncoder(DcMotor motor) {
@@ -67,10 +67,10 @@ public class Drivebase {
         double frontRightPower = (y - x - rx) / denominator;
         double backRightPower = (y + x - rx) / denominator;
 
-        this.LF.setPower(frontLeftPower*SPEED_MULTIPLIER);
-        this.LB.setPower(backLeftPower*SPEED_MULTIPLIER);
-        this.RF.setPower(frontRightPower*SPEED_MULTIPLIER);
-        this.RB.setPower(backRightPower*SPEED_MULTIPLIER);
+        this.leftFront.setPower(frontLeftPower*SPEED_MULTIPLIER);
+        this.leftBack.setPower(backLeftPower*SPEED_MULTIPLIER);
+        this.rightFront.setPower(frontRightPower*SPEED_MULTIPLIER);
+        this.rightBack.setPower(backRightPower*SPEED_MULTIPLIER);
     }
 
     public void update(Gamepad gamepad1, Gamepad gamepad2) {
