@@ -2,9 +2,13 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 
 import static org.firstinspires.ftc.teamcode.Util.Constants.*;
 
+import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+
+import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 public class Drivebase {
     private DcMotor leftFront;
@@ -12,9 +16,11 @@ public class Drivebase {
     private DcMotor leftBack;
     private DcMotor rightBack;
 
-    private static double MAX_SPEED = 0.7;
+    private static double MAX_SPEED = 0.85;
 
-    public Drivebase(HardwareMap hardwareMap) {
+    Telemetry telemetry;
+
+    public Drivebase(HardwareMap hardwareMap, Telemetry telemetry) {
         //Initialise the motors
         this.leftFront = hardwareMap.get(DcMotor.class, LF_DRIVE.getMotorName());
         this.rightFront = hardwareMap.get(DcMotor.class, RF_DRIVE.getMotorName());
@@ -31,6 +37,7 @@ public class Drivebase {
         this.leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         this.rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        this.telemetry = telemetry;
     }
 
     public void setMotorSpeeds(double LFSpeed, double RFSpeed, double LBSpeed, double RBSpeed) {

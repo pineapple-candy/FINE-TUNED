@@ -13,8 +13,10 @@
         private double hoodPosition=0.5;
         boolean dPadUp = false;
         boolean dPadDown = false;
-
+        double turretOffset=-0.03;
         boolean activated = false;
+        double previousPosition=0.5;
+        double backLashCompensation = 0.05;
         Telemetry telemetry;
         public Turret(HardwareMap hardwaremap, Telemetry telemetry){
             turretservo1 = hardwaremap.get(Servo.class, "turretservo2");
@@ -31,29 +33,28 @@
             }
             this.hoodPosition=hoodPosition;
             double servoposition = hoodPosition;//do funky stuff here at some point
-            turretservo1.setPosition(servoposition);
-            turretservo2.setPosition(servoposition);
+            turretservo1.setPosition(servoposition+turretOffset);
+            turretservo2.setPosition(servoposition+turretOffset);
 
         }
 
-        public void update(Gamepad gamepad){
-            telemetry.addLine("OOOHH TESTING GHOST");
-            telemetry.addData("1", gamepad.dpad_up);
-            telemetry.addData("2", dPadUp);
-            telemetry.addData("imposition", turretservo1.getPosition());
-            if (gamepad.dpad_right&&!dPadUp){
-                telemetry.addLine("it's working!");
-                setTurretAngle(hoodPosition+0.1);
+        public void update(Gamepad gamepad, double turretpos){
+           if (gamepad.dpad_right&&!dPadUp){
+                turretOffset=turretOffset+0.025;
                 activated = true;
             }
             if(activated) {
                 telemetry.addLine("GRAHHHHHHH");
             }
             if (gamepad.dpad_left&&!dPadDown){
-                setTurretAngle(hoodPosition-0.1);
-                telemetry.addLine("something sinister");
+                turretOffset=turretOffset-0.025;
             }
             dPadUp = gamepad.dpad_right;
             dPadDown = gamepad.dpad_left;
+
+            setTurretAngle(turretpos+turretOffset);
+
+            telemetry.addData("turret", turretpos+turretOffset);
+            previousPosition = turretpos + turretOffset;
         }
     }
