@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-
 import com.acmerobotics.roadrunner.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -24,6 +22,7 @@ public class Main extends LinearOpMode {
     private Hood hood;
     private HoodandFlywheelCompensation calcs;
     MecanumDrive drive;
+
     @Override
     public void runOpMode() {
         drivebase = new Drivebase(hardwareMap, telemetry);
@@ -39,9 +38,9 @@ public class Main extends LinearOpMode {
             double rpm = shooter.getRPM();
             drivebase.update(gamepad1,gamepad2);
             calcs.update(gamepad1, rpm);
-            double turretpos = calcs.returnturret();
-            double flywheelPower = calcs.returnpower();
-            double hoodPos = calcs.returnhood();
+            double turretpos = calcs.returnTurret();
+            double flywheelPower = calcs.returnPower(); // FLYWHEEL POWER calculated here in this class (w/ PIDs) -> fed as an argument into shooter
+            double hoodPos = calcs.returnHood(); // Hood positions are calculated in another class -> fed as an ARGUMENT into hood
             transfer.update(gamepad1);
             turret.update(gamepad2, turretpos);
             hood.update(gamepad2, hoodPos, rpm);

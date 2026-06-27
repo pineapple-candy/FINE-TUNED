@@ -1,25 +1,17 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.gamepad1;
-import static org.firstinspires.ftc.teamcode.Util.Constants.SHOOTER1;
-import static org.firstinspires.ftc.teamcode.Util.Constants.SHOOTER2;
-
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.Vector2d;
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 public class HoodandFlywheelCompensation {
     MecanumDrive odo;
-    HoodRegression basepos;
+    HoodRegression basePos;
     public double flywheelOutput;
     public double hoodOutput;
     Telemetry telemetry;
@@ -28,17 +20,23 @@ public class HoodandFlywheelCompensation {
     private long lastTime;
     private VoltageSensor battery;
     private double currentVelocity;
-    private double dt;
+    private double dt; // Small difference in time
     public double distance;
-    public double turretpos;
-    double farFF=0.6755; // AT 12.5V
-    double nearFF=0.61; // AT 12.5V
-    boolean dPadDown = true;
-    boolean dPadUp=false;
-    double farTarget = 4200;
-    double nearTarget = 3300;
-    boolean nearhpzone = false;
-    Vector2d goal = new Vector2d(0,0);
+    public double turretPos;
+
+    private double BASE_FAR_FF = 0.6755; // AT 12.5V
+    private double BASE_NEAR_FF = 0.61; // AT 12.5V
+
+    private boolean dPadDown = true;
+    private boolean dPadUp=false;
+    private double farTarget = 4200;
+    private double nearTarget = 3300;
+    private boolean nearHPZone = false;
+
+    Vector2d GOAL_VECTOR = new Vector2d(0,0);
+
+    double FAR_ZONE_THRESHOLD = 80; // in inches
+
     public HoodandFlywheelCompensation(HardwareMap hardwareMap, Telemetry telemetry, MecanumDrive mecanumDrive) {
         this.telemetry = telemetry;
 
@@ -52,7 +50,7 @@ public class HoodandFlywheelCompensation {
 
         battery = hardwareMap.voltageSensor.iterator().next();
 
-        basepos = new HoodRegression();
+        basePos = new HoodRegression();
         this.odo = mecanumDrive;
     }
 
@@ -62,30 +60,30 @@ public class HoodandFlywheelCompensation {
         odo.updatePoseEstimate();
         currentVelocity=rpm;
 
-        turretpos = getturretpos();
+        turretPos = getTurretPos();
 
-        if (nearorfar()) {
+        if (nearOrFar()) {
             flywheelOutput = farPID.calculateOutput(currentVelocity, dt)+voltageCompensation(true);
-            hoodOutput = basepos.Hoodpos(getrange(),true);
+            hoodOutput = basePos.Hoodpos(getRange(),true);
         } else {
             flywheelOutput = nearPID.calculateOutput(currentVelocity, dt)+voltageCompensation(false);
-            hoodOutput = basepos.Hoodpos(getrange(),false);
+            hoodOutput = basePos.Hoodpos(getRange(),false);
         }
-        if (gamepad.y==true) {
+        if (gamepad.y) {
             odo.localizer.setPose(new Pose2d(0, 0, 0));
         }
-        if (gamepad.x==true){
-            nearhpzone = true;
-        } else if (gamepad.a == true) {
-            nearhpzone = false;
+        if (gamepad.x){
+            nearHPZone = true;
+        } else if (gamepad.a) {
+            nearHPZone = false;
         }
 
         if (gamepad.dpad_up&&!dPadUp){
-            farFF=farFF+0.0085;
+            BASE_FAR_FF = BASE_FAR_FF +0.0085;
             farTarget=farTarget+50;
             farPID.setTarget(farTarget);
         } if (gamepad.dpad_down&&!dPadDown){
-            farFF=farFF-0.0085;
+            BASE_FAR_FF = BASE_FAR_FF -0.0085;
             farTarget=farTarget-50;
             farPID.setTarget(farTarget);
         }
@@ -97,20 +95,16 @@ public class HoodandFlywheelCompensation {
         telemetry.addData("Target", farTarget);
 
     }
-    public double getrange(){
-    double relXDistance=odo.localizer.getPose().position.x-goal.x;
-    double relYDistance=odo.localizer.getPose().position.y-goal.y;
-    distance = Math.sqrt(relXDistance*relXDistance+relYDistance*relYDistance);
-    return distance;
+
+    public double getRange(){
+        double relXDistance= odo.localizer.getPose().position.x - GOAL_VECTOR.x;
+        double relYDistance= odo.localizer.getPose().position.y - GOAL_VECTOR.y;
+        distance = Math.sqrt(relXDistance*relXDistance+relYDistance*relYDistance);
+        return distance;
     }
 
-    public boolean nearorfar(){
-        if (getrange()<80){
-            return false;
-        }
-        else {
-            return true;
-        }
+    public boolean nearOrFar(){
+        return !(getRange() < FAR_ZONE_THRESHOLD);
     }
 
     public void telemetryUpdate(){
@@ -124,24 +118,24 @@ public class HoodandFlywheelCompensation {
         lastTime = currentTime;
     }
 
-    public double voltageCompensation(boolean farornear) {
-        if (farornear) {
-            return farFF * (13 / battery.getVoltage());
+    public double voltageCompensation(boolean far) {
+        if (far) {
+            return BASE_FAR_FF * (13 / battery.getVoltage());
         } else {
-            return nearFF * (12.10 / battery.getVoltage());
+            return BASE_NEAR_FF * (12.10 / battery.getVoltage());
         }
     }
 
-    double getturretpos() {
+    double getTurretPos() {
 
         Pose2d robotPose = new Pose2d(odo.localizer.getPose().position.x, (odo.localizer.getPose().position.y), odo.localizer.getPose().heading.toDouble());
-        if (nearhpzone==false) {
-            goal = new Vector2d(-121, 123);
-        } else if (nearhpzone==true){
-            goal = new Vector2d(-2, -112);
+        if (!nearHPZone) {
+            GOAL_VECTOR = new Vector2d(-121, 123);
+        } else {
+            GOAL_VECTOR = new Vector2d(-2, -112);
         }
-        double dx = goal.x - robotPose.position.x;
-        double dy = goal.y - robotPose.position.y;
+        double dx = GOAL_VECTOR.x - robotPose.position.x;
+        double dy = GOAL_VECTOR.y - robotPose.position.y;
 
         double goalAngle = Math.atan2(dy, dx);
 
@@ -164,16 +158,17 @@ public class HoodandFlywheelCompensation {
 
         return servoPos;
     }
-    public double returnpower(){
+
+    public double returnPower(){
         return flywheelOutput;
     }
 
-    public double returnhood(){
+    public double returnHood(){
         return hoodOutput;
     }
 
-    public double returnturret(){
-        return turretpos;
+    public double returnTurret(){
+        return turretPos;
     }
 
 }

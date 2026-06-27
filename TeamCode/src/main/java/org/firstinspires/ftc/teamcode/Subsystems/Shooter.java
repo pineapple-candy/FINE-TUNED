@@ -18,6 +18,7 @@ public class Shooter {
     private DcMotorEx S1encoder;
     public boolean shooting=false;
     boolean alreadypressed;
+
     public Shooter(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
         S1 = hardwareMap.get(DcMotorEx.class,SHOOTER1.getMotorName());
@@ -27,6 +28,7 @@ public class Shooter {
         S1.setDirection(SHOOTER1.getDirection());
         S2.setDirection(SHOOTER2.getDirection());
     }
+
     public double getRPM() {
         double ticksPerSecond = S1encoder.getVelocity();
         return (ticksPerSecond / 28.0) * 60.0;
@@ -38,19 +40,18 @@ public class Shooter {
     }
 
     public void update(Gamepad gamepad, double flywheelPower) {
-
-    if (shooting==true) {
-        shoot(flywheelPower);
+        if (shooting) {
+            shoot(flywheelPower);
         } else {
-        shoot(0);
+            shoot(0);
         }
 
-        if (gamepad.b==true&&!shooting&&!alreadypressed){
-          shooting=true;
+        if (gamepad.b && !shooting && !alreadypressed){
+            shooting=true;
+        } else if (gamepad.b && !alreadypressed){
+            shooting=false;
         }
-        else if (gamepad.b==true&&!alreadypressed){
-          shooting=false;
-        }
+
         alreadypressed=gamepad.b;
         telemetry.addData("flywheelpower",flywheelPower);
    }
