@@ -13,10 +13,10 @@
         private double hoodPosition=0.5;
         boolean dPadUp = false;
         boolean dPadDown = false;
-        double turretOffset=-0.03;
+        double turretOffset=-0.04;
         boolean activated = false;
         double previousPosition=0.5;
-        double backLashCompensation = 0.05;
+        double SECOND_SERVO_OFFSET = -0.07;
         Telemetry telemetry;
         public Turret(HardwareMap hardwaremap, Telemetry telemetry){
             turretservo1 = hardwaremap.get(Servo.class, "turretservo2");
@@ -33,28 +33,28 @@
             }
             this.hoodPosition=hoodPosition;
             double servoposition = hoodPosition;//do funky stuff here at some point
-            turretservo1.setPosition(servoposition+turretOffset);
+            turretservo1.setPosition(servoposition+turretOffset+SECOND_SERVO_OFFSET);
             turretservo2.setPosition(servoposition+turretOffset);
 
         }
 
         public void update(Gamepad gamepad, double turretpos){
            if (gamepad.dpad_right&&!dPadUp){
-                turretOffset=turretOffset+0.025;
+                turretOffset=turretOffset;
+                SECOND_SERVO_OFFSET=SECOND_SERVO_OFFSET+0.025;
                 activated = true;
             }
-            if(activated) {
-                telemetry.addLine("GRAHHHHHHH");
-            }
+
             if (gamepad.dpad_left&&!dPadDown){
                 turretOffset=turretOffset-0.025;
             }
             dPadUp = gamepad.dpad_right;
             dPadDown = gamepad.dpad_left;
 
-            setTurretAngle(turretpos+turretOffset);
+            setTurretAngle(0.5);
 
             telemetry.addData("turret", turretpos+turretOffset);
+            telemetry.addData("offset", SECOND_SERVO_OFFSET);
             previousPosition = turretpos + turretOffset;
         }
     }
