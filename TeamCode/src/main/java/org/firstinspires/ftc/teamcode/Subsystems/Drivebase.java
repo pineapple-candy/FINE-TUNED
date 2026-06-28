@@ -15,7 +15,7 @@ public class Drivebase {
     private DcMotor leftBack;
     private DcMotor rightBack;
 
-    private static double MAX_SPEED = 0.85;
+    private static double MAX_SPEED = 1;
 
     Telemetry telemetry;
 

@@ -16,7 +16,7 @@
         double turretOffset=-0.04;
         boolean activated = false;
         double previousPosition=0.5;
-        double SECOND_SERVO_OFFSET = -0.07;
+        double SECOND_SERVO_OFFSET = -0.085;
         Telemetry telemetry;
         public Turret(HardwareMap hardwaremap, Telemetry telemetry){
             turretservo1 = hardwaremap.get(Servo.class, "turretservo2");
@@ -51,7 +51,7 @@
             dPadUp = gamepad.dpad_right;
             dPadDown = gamepad.dpad_left;
 
-            setTurretAngle(0.5);
+            setTurretAngle(turretpos+turretOffset);
 
             telemetry.addData("turret", turretpos+turretOffset);
             telemetry.addData("offset", SECOND_SERVO_OFFSET);
