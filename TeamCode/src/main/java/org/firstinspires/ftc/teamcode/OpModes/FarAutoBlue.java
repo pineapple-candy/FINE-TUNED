@@ -3,7 +3,6 @@ package org.firstinspires.ftc.teamcode.OpModes;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
-import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -15,9 +14,11 @@ import org.firstinspires.ftc.teamcode.Subsystems.HoodandFlywheelCompensation;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.Subsystems.Turret;
+import org.firstinspires.ftc.teamcode.Util.Constants;
+import org.firstinspires.ftc.teamcode.Util.StaticVariables;
 
-@Autonomous(name="Far Zone")
-public class FarAuto extends LinearOpMode {
+@Autonomous(name="Far Zone Blue")
+public class FarAutoBlue extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -119,6 +120,8 @@ public class FarAuto extends LinearOpMode {
                 .endTrajectory();
 
         waitForStart();
+
+        StaticVariables.setLastId(Constants.BLUE_SHOOT_ID);
 
         Actions.runBlocking(
                 new SequentialAction(

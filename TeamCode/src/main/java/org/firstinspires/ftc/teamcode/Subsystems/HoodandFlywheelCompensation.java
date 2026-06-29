@@ -8,6 +8,8 @@ import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Util.Constants;
+import org.firstinspires.ftc.teamcode.Util.StaticVariables;
 
 public class HoodandFlywheelCompensation {
     MecanumDrive odo;
@@ -129,11 +131,23 @@ public class HoodandFlywheelCompensation {
     double getTurretPos() {
 
         Pose2d robotPose = new Pose2d(odo.localizer.getPose().position.x, (odo.localizer.getPose().position.y), odo.localizer.getPose().heading.toDouble());
-        if (!nearHPZone) {
-            GOAL_VECTOR = new Vector2d(-121, 123);
-        } else {
-            GOAL_VECTOR = new Vector2d(8, -115);
+        double sideID = StaticVariables.getLastId();
+
+        // TODO: TP, you must edit the goal vector positions for RED side. I don't understand what the values mean, so I trust you to edit them. I've tracked if ur on blue/red side tracking already.
+        if (sideID == Constants.RED_SHOOT_ID) { // ON RED SIDE
+            if (!nearHPZone) {
+                GOAL_VECTOR = new Vector2d();
+            } else {
+                GOAL_VECTOR = new Vector2d();
+            }
+        } else { // ON BLUE SIDE / NO LAST AUTO SELECTED
+            if (!nearHPZone) {
+                GOAL_VECTOR = new Vector2d(-121, 123);
+            } else {
+                GOAL_VECTOR = new Vector2d(8, -115);
+            }
         }
+
         double dx = GOAL_VECTOR.x - robotPose.position.x;
         double dy = GOAL_VECTOR.y - robotPose.position.y;
 
