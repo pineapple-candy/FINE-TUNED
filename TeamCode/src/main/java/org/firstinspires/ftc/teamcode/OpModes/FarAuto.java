@@ -35,8 +35,7 @@ public class FarAuto extends LinearOpMode {
                 .stopAndAdd(turret.farZone())
 
                 .stopAndAdd(shooter.startShooting())
-                .waitSeconds(6
-                )
+                .waitSeconds(5.5)
 
                 .stopAndAdd(transfer.startIntakeFire())
                 .waitSeconds(0.4)
@@ -82,6 +81,26 @@ public class FarAuto extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180))
 
                 // Shoot third
+
+                .stopAndAdd(transfer.startIntakeFire())
+                .waitSeconds(0.4)
+                .stopAndAdd(transfer.stopIntake())
+                .waitSeconds(0.5)
+                .stopAndAdd(transfer.startIntakeFire())
+                .waitSeconds(0.4)
+                .stopAndAdd(transfer.stopIntake())
+                .waitSeconds(0.5)
+                .stopAndAdd(transfer.startIntakeFire())
+                .waitSeconds(0.4)
+                .stopAndAdd(transfer.stopIntake())
+
+                // Check first stack
+                .stopAndAdd(transfer.startIntake())
+                .strafeToLinearHeading(new Vector2d(-47,0), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180))
+                .stopAndAdd(transfer.stopIntake())
+
+                // Shoot fourth
 
                 .stopAndAdd(transfer.startIntakeFire())
                 .waitSeconds(0.4)
