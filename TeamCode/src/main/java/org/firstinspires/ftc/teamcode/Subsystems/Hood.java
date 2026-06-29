@@ -48,6 +48,8 @@ public class Hood {
         if (gamepad.x) {
             hoodOffset = 0;
         }
+
+        telemetry.addLine("Hood position: " + (hoodPos + hoodOffset));
     }
 
 }

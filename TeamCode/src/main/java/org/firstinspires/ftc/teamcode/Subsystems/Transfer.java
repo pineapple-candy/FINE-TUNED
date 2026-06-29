@@ -36,8 +36,8 @@ public class Transfer {
         this.telemetry = telemetry;
     }
 
-    public void update(Gamepad gamepad) {
-       if(gamepad.right_bumper&&stopper.getPosition()==0.40){
+    public void update(Gamepad gamepad1, Gamepad gamepad2) {
+       if(gamepad1.right_bumper&&stopper.getPosition()==0.40){
             if (timer.seconds()>4){
                 timer.reset();
             }
@@ -49,22 +49,28 @@ public class Transfer {
                 intake1.setPower(1);
                 intake2.setPower(1);
            }
-       } else if (gamepad.right_bumper) { // intake
+       } else if (gamepad1.right_bumper) { // intake
             intake1.setPower(1);
             intake2.setPower(1);
-        } else if (gamepad.left_bumper) { // outtake
+       } else if (gamepad1.left_bumper) { // outtake
             intake1.setPower(-1);
             intake2.setPower(-1);
-        } else {
+       } else {
             intake1.setPower(0);
             intake2.setPower(0);
-        }
+       }
 
-        if (gamepad.left_trigger > 0.05) {
+       if (gamepad1.left_trigger > 0.05) {
             stopper.setPosition(STOP_UP);
-        }
-        else {
+       }
+       else {
             stopper.setPosition(STOP_DOWN);
-        }
+       }
+
+       if (gamepad2.x) {
+            intake1.setPower(-1);
+            intake2.setPower(-1);
+            stopper.setPosition(STOP_UP);
+       }
     }
 }

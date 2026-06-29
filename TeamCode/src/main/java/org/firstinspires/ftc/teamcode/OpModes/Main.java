@@ -41,7 +41,7 @@ public class Main extends LinearOpMode {
             double turretpos = calcs.returnTurret();
             double flywheelPower = calcs.returnPower(); // FLYWHEEL POWER calculated here in this class (w/ PIDs) -> fed as an argument into shooter
             double hoodPos = calcs.returnHood(); // Hood positions are calculated in another class -> fed as an ARGUMENT into hood
-            transfer.update(gamepad1);
+            transfer.update(gamepad1, gamepad2);
             turret.update(gamepad2, turretpos);
             hood.update(gamepad2, hoodPos, rpm);
             shooter.update(gamepad1, flywheelPower);
