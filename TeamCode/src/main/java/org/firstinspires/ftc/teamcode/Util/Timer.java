@@ -10,6 +10,13 @@ public class Timer {
     }
 
     public void startTimer() {
-        startTime = ;
+        startTime = System.nanoTime();
+    }
+
+    public double getTime() {
+        endTime = System.nanoTime();
+        double elapsedTime = (endTime-startTime)/1_000_000_000;
+
+        return elapsedTime;
     }
 }

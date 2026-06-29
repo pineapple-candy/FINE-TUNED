@@ -10,6 +10,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.teamcode.Util.Timer;
+import org.firstinspires.ftc.teamcode.Util.Toggle;
 
 public class Transfer {
     private DcMotor intake1;
@@ -35,6 +37,9 @@ public class Transfer {
         stopper.setPosition(STOP_DOWN);
         this.telemetry = telemetry;
     }
+
+    private Toggle xButton = new Toggle();
+    private Timer xButtonTimer = new Timer();
 
     public void update(Gamepad gamepad1, Gamepad gamepad2) {
        if(gamepad1.right_bumper&&stopper.getPosition()==0.40){
@@ -67,7 +72,14 @@ public class Transfer {
             stopper.setPosition(STOP_DOWN);
        }
 
-       if (gamepad2.x) {
+
+       if (xButton.runToggle(gamepad2.x)) {
+           xButtonTimer.startTimer();
+       }
+
+       if (gamepad2.x && (xButtonTimer.getTime() > 0.5)) {
+            stopper.setPosition(STOP_UP);
+       } else if (gamepad2.x && (xButtonTimer.getTime() > 2)) {
             intake1.setPower(-1);
             intake2.setPower(-1);
             stopper.setPosition(STOP_UP);

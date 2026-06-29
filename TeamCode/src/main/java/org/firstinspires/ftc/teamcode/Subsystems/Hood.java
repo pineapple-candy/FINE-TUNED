@@ -38,11 +38,11 @@ public class Hood {
         setHoodAngle(hoodPos+hoodOffset);
 
         if (addOffsetToggle.runToggle(gamepad.dpad_up)){
-            hoodOffset += hoodOffset;
+            hoodOffset += 0.025;
         }
 
         if (removeOffsetToggle.runToggle(gamepad.dpad_down)){
-            hoodOffset -= hoodOffset;
+            hoodOffset -= 0.025;
         }
 
         if (gamepad.x) {
