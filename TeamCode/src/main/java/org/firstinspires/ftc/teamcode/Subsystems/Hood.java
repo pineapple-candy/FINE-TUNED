@@ -29,6 +29,7 @@ public class Hood {
 
     private Toggle addOffsetToggle = new Toggle();
     private Toggle removeOffsetToggle = new Toggle();
+
     public void update (Gamepad gamepad, double hoodPos, double rpm){
         double rpmCalc=rpm*-1;
 
@@ -37,9 +38,15 @@ public class Hood {
         setHoodAngle(hoodPos+hoodOffset);
 
         if (addOffsetToggle.runToggle(gamepad.dpad_up)){
-            hoodOffset=hoodOffset+0.025;
-        } if (removeOffsetToggle.runToggle(gamepad.dpad_down)){
-            hoodOffset=hoodOffset-0.025;
+            hoodOffset += hoodOffset;
+        }
+
+        if (removeOffsetToggle.runToggle(gamepad.dpad_down)){
+            hoodOffset -= hoodOffset;
+        }
+
+        if (gamepad.x) {
+            hoodOffset = 0;
         }
     }
 
