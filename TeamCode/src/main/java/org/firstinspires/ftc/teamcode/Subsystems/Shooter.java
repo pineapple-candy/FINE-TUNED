@@ -1,9 +1,14 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static org.firstinspires.ftc.teamcode.Util.Constants.*;
+
+import androidx.annotation.NonNull;
+
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -55,4 +60,23 @@ public class Shooter {
         alreadypressed=gamepad.b;
         telemetry.addData("flywheelpower",flywheelPower);
    }
+
+    public class startShooting implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            shoot(0.765);
+            return false;
+        }
+    }
+
+    public class stopShooting implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            shoot(0);
+            return false;
+        }
+    }
+
+    public Action startShooting() {return new Shooter.startShooting();}
+    public Action stopShooting() {return new Shooter.stopShooting();}
 }

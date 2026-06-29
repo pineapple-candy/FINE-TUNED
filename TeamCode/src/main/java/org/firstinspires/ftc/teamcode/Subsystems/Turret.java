@@ -1,5 +1,9 @@
     package org.firstinspires.ftc.teamcode.Subsystems;
 
+    import androidx.annotation.NonNull;
+
+    import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+    import com.acmerobotics.roadrunner.Action;
     import com.qualcomm.robotcore.hardware.Gamepad;
     import com.qualcomm.robotcore.hardware.HardwareMap;
     import com.qualcomm.robotcore.hardware.Servo;
@@ -61,5 +65,15 @@
             telemetry.addData("turret", turretpos+turretOffset);
             telemetry.addData("offset", SECOND_SERVO_OFFSET);
             previousPosition = turretpos + turretOffset;
+        } // 0.63
+
+        public class farZone implements Action {
+            @Override
+            public boolean run(@NonNull TelemetryPacket packet) {
+                setTurretAngle(0.16);
+                return false;
+            }
         }
+
+        public Action farZone() {return new Turret.farZone();}
     }

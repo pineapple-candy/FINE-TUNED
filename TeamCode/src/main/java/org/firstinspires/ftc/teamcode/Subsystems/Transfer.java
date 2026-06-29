@@ -3,6 +3,10 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 import static org.firstinspires.ftc.teamcode.Util.Constants.*;
 
+import androidx.annotation.NonNull;
+
+import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.acmerobotics.roadrunner.Action;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -85,4 +89,38 @@ public class Transfer {
             stopper.setPosition(STOP_UP);
        }
     }
+
+    public class startIntake implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            intake1.setPower(1);
+            intake2.setPower(1);
+            stopper.setPosition(STOP_DOWN);
+            return false;
+        }
+    }
+
+    public class startIntakeFire implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            intake1.setPower(1);
+            intake2.setPower(1);
+            stopper.setPosition(STOP_UP);
+            return false;
+        }
+    }
+
+    public class stopIntake implements Action {
+        @Override
+        public boolean run(@NonNull TelemetryPacket packet) {
+            intake1.setPower(0);
+            intake2.setPower(0);
+            return false;
+        }
+    }
+
+    public Action startIntake() {return new startIntake();}
+    public Action startIntakeFire() {return new startIntakeFire();}
+    public Action stopIntake() {return new stopIntake();}
+
 }
