@@ -128,6 +128,39 @@ public class Drivebase {
         drive(stickX, stickY, rotation);
 
     }
+    public void updateSeb(Gamepad gamepad1, Gamepad gamepad2) {
+
+        // === DRIVER 1 INPUTS ===
+
+        double stickX1 = 0;
+        if(Math.abs(gamepad1.left_stick_x) > 0.1){
+            stickX1 = gamepad1.left_stick_x/1.3;
+        }
+        double stickY1 = 0;
+        if(Math.abs(gamepad1.left_stick_y) > 0.1){
+            stickY1 = -gamepad1.left_stick_y/1.3;
+        }
+        double rotation1 = gamepad1.right_stick_x/1.6;
+
+        // === DRIVER 2 INPUTS (always slow) ===
+        double stickX2 = gamepad2.left_stick_x;   // scale for slower control
+        double stickY2 = -gamepad2.left_stick_y;
+        double rotation2 = gamepad2.right_stick_x;
+
+        // === COMBINE INPUTS ===
+        double stickX = stickX1 + stickX2;
+        double stickY = stickY1 + stickY2;
+        double rotation = rotation1 + rotation2;
+
+        // Normalize if total > 1 to prevent clipping
+        double max = Math.max(1.0, Math.abs(stickX) + Math.abs(stickY) + Math.abs(rotation));
+        stickX /= max;
+        stickY /= max;
+        rotation /= max;
+
+        drive(stickX, stickY, rotation);
+
+    }
 
 //    // AUTONOMOUS MODES
 //    private static final double TICKS_PER_ROTATION = 288.375;
