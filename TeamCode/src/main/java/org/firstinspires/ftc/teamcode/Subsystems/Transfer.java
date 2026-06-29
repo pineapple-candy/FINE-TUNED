@@ -77,7 +77,7 @@ public class Transfer {
            xButtonTimer.startTimer();
        }
 
-       if (gamepad2.x && (xButtonTimer.getTime() > 0.5)) {
+       if (gamepad2.x && (xButtonTimer.getTime() > 0.5 && xButtonTimer.getTime() < 2)) {
             stopper.setPosition(STOP_UP);
        } else if (gamepad2.x && (xButtonTimer.getTime() > 2)) {
             intake1.setPower(-1);
