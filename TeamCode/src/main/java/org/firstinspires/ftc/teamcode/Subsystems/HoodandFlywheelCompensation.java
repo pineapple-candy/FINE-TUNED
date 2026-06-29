@@ -132,8 +132,8 @@ public class HoodandFlywheelCompensation {
         if (!nearHPZone) {
             GOAL_VECTOR = new Vector2d(-121, 123);
         } else {
-            GOAL_VECTOR = new Vector2d(8, -120);
-        }
+        ?
+            ":}|PIO{,."
         double dx = GOAL_VECTOR.x - robotPose.position.x;
         double dy = GOAL_VECTOR.y - robotPose.position.y;
 
