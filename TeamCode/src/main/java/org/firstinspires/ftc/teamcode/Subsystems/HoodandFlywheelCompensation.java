@@ -104,7 +104,7 @@ public class HoodandFlywheelCompensation {
     }
 
     public boolean nearOrFar(){
-        return !(getRange() < FAR_ZONE_THRESHOLD);
+        return (getRange() > FAR_ZONE_THRESHOLD); // FAR_ZONE_THRESHOLD = 50
     }
 
     public void telemetryUpdate(){
@@ -132,8 +132,8 @@ public class HoodandFlywheelCompensation {
         if (!nearHPZone) {
             GOAL_VECTOR = new Vector2d(-121, 123);
         } else {
-        ?
-            ":}|PIO{,."
+            GOAL_VECTOR = new Vector2d(8, -120);
+        }
         double dx = GOAL_VECTOR.x - robotPose.position.x;
         double dy = GOAL_VECTOR.y - robotPose.position.y;
 
