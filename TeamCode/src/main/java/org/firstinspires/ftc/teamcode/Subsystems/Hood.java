@@ -59,7 +59,7 @@ public class Hood {
     public class farZone implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            setHoodAngle(0.1);
+            setHoodAngle(0.2);
             return false;
         }
     }

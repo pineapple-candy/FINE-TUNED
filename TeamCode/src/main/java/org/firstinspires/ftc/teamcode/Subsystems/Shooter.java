@@ -21,14 +21,15 @@ public class Shooter {
     private DcMotor S1;
     private DcMotor S2;
     private DcMotorEx S1encoder;
-    public boolean shooting=false;
+    public boolean shooting = false;
     boolean alreadypressed;
+    double autoFlywheelPower;
 
     public Shooter(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
-        S1 = hardwareMap.get(DcMotorEx.class,SHOOTER1.getMotorName());
-        S2 = hardwareMap.get(DcMotor.class,SHOOTER2.getMotorName());
-        S1encoder = hardwareMap.get(DcMotorEx.class,SHOOTER1.getMotorName());
+        S1 = hardwareMap.get(DcMotorEx.class, SHOOTER1.getMotorName());
+        S2 = hardwareMap.get(DcMotor.class, SHOOTER2.getMotorName());
+        S1encoder = hardwareMap.get(DcMotorEx.class, SHOOTER1.getMotorName());
 
         S1.setDirection(SHOOTER1.getDirection());
         S2.setDirection(SHOOTER2.getDirection());
@@ -51,23 +52,23 @@ public class Shooter {
             shoot(0);
         }
 
-        if (gamepad.b && !shooting && !alreadypressed){
-            shooting=true;
-        } else if (gamepad.b && !alreadypressed){
-            shooting=false;
+        if (gamepad.b && !shooting && !alreadypressed) {
+            shooting = true;
+        } else if (gamepad.b && !alreadypressed) {
+            shooting = false;
         }
 
-        alreadypressed=gamepad.b;
-        telemetry.addData("flywheelpower",flywheelPower);
-   }
-
-    public class startShooting implements Action {
-        @Override
-        public boolean run(@NonNull TelemetryPacket packet) {
-            shoot(0.765);
-            return false;
-        }
+        alreadypressed = gamepad.b;
+        telemetry.addData("flywheelpower", flywheelPower);
     }
+
+//    public class startShooting implements Action {
+//        @Override
+//        public boolean run(@NonNull TelemetryPacket packet) {
+//            shoot(flywheelPower);
+//            return false;
+//        }
+//    }
 
     public class stopShooting implements Action {
         @Override
@@ -77,6 +78,7 @@ public class Shooter {
         }
     }
 
-    public Action startShooting() {return new Shooter.startShooting();}
-    public Action stopShooting() {return new Shooter.stopShooting();}
+
+//    public Action startShooting() {return new Shooter.startShooting();}
+ //   public Action stopShooting() {return new Shooter.stopShooting();}
 }

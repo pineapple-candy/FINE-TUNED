@@ -101,9 +101,13 @@ public class Transfer {
     }
 
     public class startIntakeFire implements Action {
+        private final double power;
+        public startIntakeFire(double power){
+            this.power=power;
+        }
         @Override
         public boolean run(@NonNull TelemetryPacket packet) {
-            intake1.setPower(1);
+            intake1.setPower(power);
             intake2.setPower(1);
             stopper.setPosition(STOP_UP);
             return false;
@@ -120,7 +124,7 @@ public class Transfer {
     }
 
     public Action startIntake() {return new startIntake();}
-    public Action startIntakeFire() {return new startIntakeFire();}
+    public Action startIntakeFire(double power) {return new startIntakeFire(power);}
     public Action stopIntake() {return new stopIntake();}
 
 }

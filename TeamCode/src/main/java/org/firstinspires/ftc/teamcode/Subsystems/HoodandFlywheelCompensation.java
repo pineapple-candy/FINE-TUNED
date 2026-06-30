@@ -184,5 +184,11 @@ public class HoodandFlywheelCompensation {
     public double returnTurret(){
         return turretPos;
     }
-
+    public void updateAuto(double rpm){
+        PIDUpdates();
+        farPID.setTarget(4200);
+        farPID = new PID(0.000004, 0.000000001, 0.000);
+        currentVelocity=rpm;
+        flywheelOutput = farPID.calculateOutput(currentVelocity, dt)+ voltageCompensation(true);
+    }
 }
