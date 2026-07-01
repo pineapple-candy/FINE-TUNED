@@ -167,7 +167,7 @@ public class HoodandFlywheelCompensation {
 
         double degrees = Math.toDegrees(turretAngle);
 
-        double servoDegrees = degrees / 0.6185567010309278;
+        double servoDegrees = degrees / 0.6378865979381443;
 
         servoDegrees = Math.max(-177.5, Math.min(177.5, servoDegrees));
 
