@@ -68,12 +68,21 @@
         } // 0.63
 
         public class farZone implements Action {
+            private double turretPosition;
+            private boolean blueOrLeft=true;
+            public farZone (boolean BlueOrLeft) {
+            this.blueOrLeft=blueOrLeft;
+            }
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                setTurretAngle(0.16);
+                if (blueOrLeft) {
+                    setTurretAngle(0.16);
+                } else{
+                    setTurretAngle(0.84);
+                }
                 return false;
             }
         }
 
-        public Action farZone() {return new Turret.farZone();}
+        public Action farZone(boolean blueOrRed) {return new Turret.farZone(blueOrRed);}
     }

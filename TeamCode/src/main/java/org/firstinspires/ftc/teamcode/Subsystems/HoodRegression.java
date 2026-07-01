@@ -6,7 +6,7 @@ public class HoodRegression {
             return -0.0002322635*(Math.pow(distance,3))+0.1003701*(Math.pow(distance,2))+-14.42165*distance+689.14512;
 //            return  200000000*Math.pow(distance,-4.111);
         } else {
-            return 0.5;
+            return 0;
         }
     }
 }

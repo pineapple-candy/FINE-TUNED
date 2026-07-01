@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.OpModes;
 
+import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.MecanumDrive;
+import org.firstinspires.ftc.teamcode.Subsystems.AutoPID;
 import org.firstinspires.ftc.teamcode.Subsystems.Hood;
 import org.firstinspires.ftc.teamcode.Subsystems.HoodandFlywheelCompensation;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
@@ -34,99 +36,88 @@ public class FarAutoRed extends LinearOpMode {
         TrajectoryActionBuilder wholeTrajectory = drive.actionBuilder(initialPose)
                 //Shoot first
                 .stopAndAdd(hood.farZone())
-                .stopAndAdd(turret.farZone())
-
-                .stopAndAdd(shooter.startShooting())
-                .waitSeconds(5.5)
-
-                .stopAndAdd(transfer.startIntakeFire())
-                .waitSeconds(0.4)
+                .stopAndAdd(turret.farZone(false))
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
-                .waitSeconds(0.6)
-                .stopAndAdd(transfer.startIntakeFire())
-                .waitSeconds(0.4)
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
-                .waitSeconds(0.6)
-                .stopAndAdd(transfer.startIntakeFire())
-                .waitSeconds(0.4)
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(1))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
 
 
                 // First stack
                 .stopAndAdd(transfer.startIntake())
-                .strafeToLinearHeading(new Vector2d(-47,0), Math.toRadians(180))
-                .waitSeconds(0.5)
+                .strafeToLinearHeading(new Vector2d(-43,-5), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-44 ,-15), Math.toRadians(190))
+                .strafeToLinearHeading(new Vector2d(-44,-12), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-47,-12), Math.toRadians(180))
+                .waitSeconds(0.25)
+                .strafeToLinearHeading(new Vector2d(-37.5,0), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-44,0), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-44,-5), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-47,-5), Math.toRadians(180))
+                .waitSeconds(0.25)
                 .stopAndAdd(transfer.stopIntake())
                 .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180))
 
                 // Shoot second
-
-                .stopAndAdd(transfer.startIntakeFire())
-                .waitSeconds(0.4)
+                .stopAndAdd(hood.farZone())
+                .stopAndAdd(turret.farZone(false))
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
-                .waitSeconds(0.5)
-                .stopAndAdd(transfer.startIntakeFire())
-                .waitSeconds(0.4)
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
-                .waitSeconds(0.5)
-                .stopAndAdd(transfer.startIntakeFire())
-                .waitSeconds(0.4)
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(1))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
 
                 // Go to first stack
-                .strafeToLinearHeading(new Vector2d(-12,30),Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-12,-30),Math.toRadians(180))
                 .stopAndAdd(transfer.startIntake())
-                .strafeToLinearHeading(new Vector2d(-45,30),Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-45,-30),Math.toRadians(180))
                 .waitSeconds(0.5)
                 .stopAndAdd(transfer.stopIntake())
 
                 .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180))
 
                 // Shoot third
-
-                .stopAndAdd(transfer.startIntakeFire())
-                .waitSeconds(0.4)
+                .stopAndAdd(hood.farZone())
+                .stopAndAdd(turret.farZone(false))
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
-                .waitSeconds(0.5)
-                .stopAndAdd(transfer.startIntakeFire())
-                .waitSeconds(0.4)
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
-                .waitSeconds(0.5)
-                .stopAndAdd(transfer.startIntakeFire())
-                .waitSeconds(0.4)
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(1))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
-
-                // Check first stack
-                .stopAndAdd(transfer.startIntake())
-                .strafeToLinearHeading(new Vector2d(-47,0), Math.toRadians(180))
-                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180))
-                .stopAndAdd(transfer.stopIntake())
-
-                // Shoot fourth
-
-                .stopAndAdd(transfer.startIntakeFire())
-                .waitSeconds(0.4)
-                .stopAndAdd(transfer.stopIntake())
-                .waitSeconds(0.5)
-                .stopAndAdd(transfer.startIntakeFire())
-                .waitSeconds(0.4)
-                .stopAndAdd(transfer.stopIntake())
-                .waitSeconds(0.5)
-                .stopAndAdd(transfer.startIntakeFire())
-                .waitSeconds(0.4)
-                .stopAndAdd(transfer.stopIntake())
-
-                .stopAndAdd(shooter.stopShooting())
 
                 .endTrajectory();
 
         waitForStart();
-
-        StaticVariables.setLastId(Constants.RED_SHOOT_ID);
-
+        telemetry.addLine("AUTO STARTED");
+        telemetry.update();
         Actions.runBlocking(
-                new SequentialAction(
-                        wholeTrajectory.build()
+                new ParallelAction(
+                        new AutoPID.ShooterUpdateAction(shooter, calc, telemetry),
+                        new SequentialAction(
+                                wholeTrajectory.build()
+                        )
                 )
         );
     }

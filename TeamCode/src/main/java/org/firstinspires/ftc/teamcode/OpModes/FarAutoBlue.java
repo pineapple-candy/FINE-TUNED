@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.Subsystems.Turret;
 
 @Autonomous(name="Far Zone")
-public class FarAuto extends LinearOpMode {
+public class FarAutoBlue extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -35,7 +35,7 @@ public class FarAuto extends LinearOpMode {
         TrajectoryActionBuilder wholeTrajectory = drive.actionBuilder(initialPose)
                 //Shoot first
                 .stopAndAdd(hood.farZone())
-                .stopAndAdd(turret.farZone())
+                .stopAndAdd(turret.farZone(true))
                 .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
                 .stopAndAdd(transfer.new startIntakeFire(0.3))
                 .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
@@ -67,7 +67,7 @@ public class FarAuto extends LinearOpMode {
 
                 // Shoot second
                 .stopAndAdd(hood.farZone())
-                .stopAndAdd(turret.farZone())
+                .stopAndAdd(turret.farZone(true))
                 .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
                 .stopAndAdd(transfer.new startIntakeFire(0.3))
                 .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
@@ -92,7 +92,7 @@ public class FarAuto extends LinearOpMode {
 
                 // Shoot third
                 .stopAndAdd(hood.farZone())
-                .stopAndAdd(turret.farZone())
+                .stopAndAdd(turret.farZone(true))
                 .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
                 .stopAndAdd(transfer.new startIntakeFire(0.3))
                 .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))

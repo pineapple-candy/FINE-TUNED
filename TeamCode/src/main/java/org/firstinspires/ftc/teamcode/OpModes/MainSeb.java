@@ -36,8 +36,9 @@ public class MainSeb extends LinearOpMode {
 
         while (opModeIsActive() && !isStopRequested())  {
             double rpm = shooter.getRPM();
+            boolean bangbang = shooter.ReturnBangbang();
             drivebase.updateSeb(gamepad1,gamepad2);
-            calcs.update(gamepad1, rpm);
+            calcs.update(gamepad1, rpm, bangbang);
             double turretpos = calcs.returnTurret();
             double flywheelPower = calcs.returnPower(); // FLYWHEEL POWER calculated here in this class (w/ PIDs) -> fed as an argument into shooter
             double hoodPos = calcs.returnHood(); // Hood positions are calculated in another class -> fed as an ARGUMENT into hood

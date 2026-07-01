@@ -56,21 +56,28 @@ public class HoodandFlywheelCompensation {
         this.odo = mecanumDrive;
     }
 
-    public void update(Gamepad gamepad, double rpm) {
+    public void update(Gamepad gamepad, double rpm, boolean bangbang) {
 
         PIDUpdates();
         odo.updatePoseEstimate();
-        currentVelocity=rpm;
-
+        currentVelocity = rpm;
+        boolean bangbangtrue = bangbang;
         turretPos = getTurretPos();
-
-        if (nearOrFar()) {
-            flywheelOutput = farPID.calculateOutput(currentVelocity, dt)+voltageCompensation(true);
-            hoodOutput = basePos.Hoodpos(getRange(),true);
+        if (bangbang = false) {
+            if (nearOrFar()) {
+                flywheelOutput = farPID.calculateOutput(currentVelocity, dt) + voltageCompensation(true);
+                hoodOutput = basePos.Hoodpos(getRange(), true);
+            } else {
+                flywheelOutput = nearPID.calculateOutput(currentVelocity, dt) + voltageCompensation(false);
+                hoodOutput = basePos.Hoodpos(getRange(), false);
+            }
         } else {
-            flywheelOutput = nearPID.calculateOutput(currentVelocity, dt)+voltageCompensation(false);
-            hoodOutput = basePos.Hoodpos(getRange(),false);
-        }
+                if (currentVelocity<4200){
+                    flywheelOutput = 1;
+                } else {
+                    flywheelOutput =0.5;
+                }
+            }
         if (gamepad.y) {
             odo.localizer.setPose(new Pose2d(0, 0, 0));
         }
@@ -136,9 +143,9 @@ public class HoodandFlywheelCompensation {
         // TODO: TP, you must edit the goal vector positions for RED side. I don't understand what the values mean, so I trust you to edit them. I've tracked if ur on blue/red side tracking already.
         if (sideID == Constants.RED_SHOOT_ID) { // ON RED SIDE
             if (!nearHPZone) {
-                GOAL_VECTOR = new Vector2d();
+                GOAL_VECTOR = new Vector2d(-121,-123);
             } else {
-                GOAL_VECTOR = new Vector2d();
+                GOAL_VECTOR = new Vector2d(8,115);
             }
         } else { // ON BLUE SIDE / NO LAST AUTO SELECTED
             if (!nearHPZone) {

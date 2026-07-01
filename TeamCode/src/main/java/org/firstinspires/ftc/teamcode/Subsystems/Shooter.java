@@ -24,6 +24,7 @@ public class Shooter {
     public boolean shooting = false;
     boolean alreadypressed;
     double autoFlywheelPower;
+    boolean bangbang;
 
     public Shooter(HardwareMap hardwareMap, Telemetry telemetry) {
         this.telemetry = telemetry;
@@ -48,8 +49,10 @@ public class Shooter {
     public void update(Gamepad gamepad, double flywheelPower) {
         if (shooting) {
             shoot(flywheelPower);
+            bangbang = true;
         } else {
             shoot(0);
+            bangbang = false;
         }
 
         if (gamepad.b && !shooting && !alreadypressed) {
@@ -60,6 +63,10 @@ public class Shooter {
 
         alreadypressed = gamepad.b;
         telemetry.addData("flywheelpower", flywheelPower);
+    }
+
+    public boolean ReturnBangbang (){
+        return bangbang;
     }
 
 //    public class startShooting implements Action {
