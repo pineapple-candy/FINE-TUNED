@@ -119,6 +119,7 @@ public class Transfer {
         public boolean run(@NonNull TelemetryPacket packet) {
             intake1.setPower(0);
             intake2.setPower(0);
+            stopper.setPosition(STOP_DOWN);
             return false;
         }
     }

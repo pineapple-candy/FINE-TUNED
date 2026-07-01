@@ -55,7 +55,7 @@ public class FarAutoBlue extends LinearOpMode {
                 .strafeToLinearHeading(new Vector2d(-43,5), Math.toRadians(180))
                 .strafeToLinearHeading(new Vector2d(-44 ,15), Math.toRadians(190))
                 .strafeToLinearHeading(new Vector2d(-44,12), Math.toRadians(180))
-                .strafeToLinearHeading(new Vector2d(-47,12), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-45,12), Math.toRadians(180))
 //                .waitSeconds(0.25)
 //                .strafeToLinearHeading(new Vector2d(-37.5,0), Math.toRadians(180))
 //                .strafeToLinearHeading(new Vector2d(-44,0), Math.toRadians(180))
