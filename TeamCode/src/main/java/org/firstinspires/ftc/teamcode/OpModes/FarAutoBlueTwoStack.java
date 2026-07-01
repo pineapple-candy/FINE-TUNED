@@ -4,7 +4,6 @@ import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
-import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -20,8 +19,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.Turret;
 import org.firstinspires.ftc.teamcode.Util.Constants;
 import org.firstinspires.ftc.teamcode.Util.StaticVariables;
 
-@Autonomous(name="Far Zone Blue")
-public class FarAutoBlue extends LinearOpMode {
+@Autonomous(name="Far Zone Blue (Two Stack)")
+public class FarAutoBlueTwoStack extends LinearOpMode {
 
     @Override
     public void runOpMode() {
@@ -108,12 +107,14 @@ public class FarAutoBlue extends LinearOpMode {
                 .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
 
-                // Check for loose balls
+                // Go to second stack
+                .strafeToLinearHeading(new Vector2d(-12,50),Math.toRadians(180))
                 .stopAndAdd(transfer.startIntake())
-                .strafeToLinearHeading(new Vector2d(-35,0),Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-43,50),Math.toRadians(180))
                 .waitSeconds(0.5)
-                .strafeToLinearHeading(new Vector2d(0,0),Math.toRadians(180))
                 .stopAndAdd(transfer.stopIntake())
+
+                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180))
 
                 // Shoot fourth
                 .stopAndAdd(hood.farZone())

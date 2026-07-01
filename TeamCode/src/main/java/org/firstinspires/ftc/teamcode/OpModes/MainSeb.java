@@ -11,6 +11,8 @@ import org.firstinspires.ftc.teamcode.Subsystems.HoodandFlywheelCompensation;
 import org.firstinspires.ftc.teamcode.Subsystems.Shooter;
 import org.firstinspires.ftc.teamcode.Subsystems.Transfer;
 import org.firstinspires.ftc.teamcode.Subsystems.Turret;
+import org.firstinspires.ftc.teamcode.Util.Constants;
+import org.firstinspires.ftc.teamcode.Util.StaticVariables;
 
 @TeleOp(name="MainSeb")
 public class MainSeb extends LinearOpMode {
@@ -32,6 +34,29 @@ public class MainSeb extends LinearOpMode {
         hood = new Hood(hardwareMap, telemetry);
         drive = new MecanumDrive(hardwareMap, new Pose2d(0,0,0));
         calcs = new HoodandFlywheelCompensation(hardwareMap, telemetry, drive);
+
+        double sideID = StaticVariables.getLastId();
+        while (opModeInInit() && !isStarted()) {
+            if (sideID == Constants.RED_SHOOT_ID) {
+                telemetry.addLine("CURRENT SIDE: RED");
+            } else if (sideID == Constants.BLUE_SHOOT_ID) {
+                telemetry.addLine("CURRENT SIDE: BLUE");
+            } else { // No last id found
+                telemetry.addLine("CURRENT SIDE: No last side found! - defaul to Blue");
+            }
+
+            if (gamepad1.a) {
+                sideID = Constants.RED_SHOOT_ID;
+            }
+            if (gamepad1.b) {
+                sideID = Constants.BLUE_SHOOT_ID;
+            }
+
+
+            telemetry.addLine("To manually change, press A for Red, and B for Blue! (gamepad1)");
+            telemetry.update();
+        }
+
         waitForStart();
 
         while (opModeIsActive() && !isStopRequested())  {

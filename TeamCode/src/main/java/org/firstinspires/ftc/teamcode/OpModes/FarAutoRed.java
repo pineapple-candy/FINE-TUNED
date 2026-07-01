@@ -107,9 +107,37 @@ public class FarAutoRed extends LinearOpMode {
                 .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
 
+                // Check for loose balls
+                .stopAndAdd(transfer.startIntake())
+                .strafeToLinearHeading(new Vector2d(-35,0),Math.toRadians(180))
+                .waitSeconds(0.5)
+                .strafeToLinearHeading(new Vector2d(0,0),Math.toRadians(180))
+                .stopAndAdd(transfer.stopIntake())
+
+                // Shoot fourth
+                .stopAndAdd(hood.farZone())
+                .stopAndAdd(turret.farZone(false))
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(1))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+
+                // Autobots, roll out!
+                .strafeToLinearHeading(new Vector2d(-20,0),Math.toRadians(180))
                 .endTrajectory();
 
         waitForStart();
+
+        StaticVariables.setLastId(Constants.RED_SHOOT_ID);
+
         telemetry.addLine("AUTO STARTED");
         telemetry.update();
         Actions.runBlocking(

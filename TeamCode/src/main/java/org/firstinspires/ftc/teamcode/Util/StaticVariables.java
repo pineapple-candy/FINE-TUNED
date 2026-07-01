@@ -2,7 +2,7 @@ package org.firstinspires.ftc.teamcode.Util;
 
 public class StaticVariables {
 
-    private static int sideID = Constants.RED_SHOOT_ID;
+    private static int sideID = 0;
     public static void setLastId(int id) {
         sideID = id;
     }
