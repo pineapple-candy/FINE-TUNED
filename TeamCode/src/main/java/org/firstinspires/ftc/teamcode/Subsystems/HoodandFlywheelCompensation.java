@@ -63,7 +63,7 @@ public class HoodandFlywheelCompensation {
         currentVelocity = rpm;
         boolean bangbangtrue = bangbang;
         turretPos = getTurretPos();
-        if (bangbang = false) {
+        if (bangbangtrue = false) {
             if (nearOrFar()) {
                 flywheelOutput = farPID.calculateOutput(currentVelocity, dt) + voltageCompensation(true);
                 hoodOutput = basePos.Hoodpos(getRange(), true);
@@ -72,7 +72,7 @@ public class HoodandFlywheelCompensation {
                 hoodOutput = basePos.Hoodpos(getRange(), false);
             }
         } else {
-                if (currentVelocity<4200){
+                if (currentVelocity>-4200){
                     flywheelOutput = 1;
                 } else {
                     flywheelOutput =0.5;
