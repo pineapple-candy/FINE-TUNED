@@ -143,13 +143,13 @@ public class HoodandFlywheelCompensation {
         // TODO: TP, you must edit the goal vector positions for RED side. I don't understand what the values mean, so I trust you to edit them. I've tracked if ur on blue/red side tracking already.
         if (sideID == Constants.RED_SHOOT_ID) { // ON RED SIDE
             if (!nearHPZone) {
-                GOAL_VECTOR = new Vector2d(-121,-123);
+                GOAL_VECTOR = new Vector2d(-121,-115);
             } else {
                 GOAL_VECTOR = new Vector2d(8,115);
             }
         } else { // ON BLUE SIDE / NO LAST AUTO SELECTED
             if (!nearHPZone) {
-                GOAL_VECTOR = new Vector2d(-121, 123);
+                GOAL_VECTOR = new Vector2d(-121, 115);
             } else {
                 GOAL_VECTOR = new Vector2d(8, -115);
             }

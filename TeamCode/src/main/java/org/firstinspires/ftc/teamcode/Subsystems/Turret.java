@@ -44,13 +44,13 @@
 
         public void update(Gamepad gamepad, double turretpos){
            if (gamepad.dpad_right&&!dPadUp){
-                turretOffset += 0.025;
+                turretOffset += 0.005;
 //                SECOND_SERVO_OFFSET=SECOND_SERVO_OFFSET+0.025;
                 activated = true;
             }
 
             if (gamepad.dpad_left&&!dPadDown){
-                turretOffset -= 0.025;
+                turretOffset -= 0.005;
             }
 
             if (gamepad.x) {
@@ -70,7 +70,7 @@
         public class farZone implements Action {
             private double turretPosition;
             private boolean blueOrLeft=true;
-            public farZone (boolean BlueOrLeft) {
+            public farZone (boolean blueOrLeft) {
             this.blueOrLeft=blueOrLeft;
             }
             @Override
