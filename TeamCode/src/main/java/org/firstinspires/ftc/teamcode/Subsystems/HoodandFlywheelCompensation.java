@@ -11,6 +11,8 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.Util.Constants;
 import org.firstinspires.ftc.teamcode.Util.StaticVariables;
 
+import java.lang.annotation.Target;
+
 public class HoodandFlywheelCompensation {
     MecanumDrive odo;
     HoodRegression basePos;
@@ -19,6 +21,7 @@ public class HoodandFlywheelCompensation {
     Telemetry telemetry;
     PID farPID;
     PID nearPID;
+    double TargetRPM=5700;
     private long lastTime;
     private VoltageSensor battery;
     private double currentVelocity;
@@ -37,7 +40,7 @@ public class HoodandFlywheelCompensation {
 
     Vector2d GOAL_VECTOR = new Vector2d(0,0);
 
-    double FAR_ZONE_THRESHOLD = 80; // in inches
+    double FAR_ZONE_THRESHOLD = 100; // in inches
 
     public HoodandFlywheelCompensation(HardwareMap hardwareMap, Telemetry telemetry, MecanumDrive mecanumDrive) {
         this.telemetry = telemetry;
@@ -61,7 +64,7 @@ public class HoodandFlywheelCompensation {
         PIDUpdates();
         odo.updatePoseEstimate();
         currentVelocity = rpm;
-        boolean bangbangtrue = bangbang;
+        boolean bangbangtrue = true;
         turretPos = getTurretPos();
         if (bangbangtrue = false) {
             if (nearOrFar()) {
@@ -72,7 +75,7 @@ public class HoodandFlywheelCompensation {
                 hoodOutput = basePos.Hoodpos(getRange(), false);
             }
         } else {
-                if (currentVelocity>-4200){
+                if (currentVelocity>-TargetRPM){
                     flywheelOutput = 1;
                 } else {
                     flywheelOutput =0.5;
@@ -88,13 +91,9 @@ public class HoodandFlywheelCompensation {
         }
 
         if (gamepad.dpad_up&&!dPadUp){
-            BASE_FAR_FF = BASE_FAR_FF +0.0085;
-            farTarget=farTarget+50;
-            farPID.setTarget(farTarget);
+            TargetRPM =+ 50;
         } if (gamepad.dpad_down&&!dPadDown){
-            BASE_FAR_FF = BASE_FAR_FF -0.0085;
-            farTarget=farTarget-50;
-            farPID.setTarget(farTarget);
+            TargetRPM =+ 50;
         }
         dPadDown = gamepad.dpad_down;
         dPadUp = gamepad.dpad_up;
