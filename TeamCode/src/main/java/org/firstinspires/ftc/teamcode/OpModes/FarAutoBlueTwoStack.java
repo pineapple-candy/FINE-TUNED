@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -53,10 +55,10 @@ public class FarAutoBlueTwoStack extends LinearOpMode {
 
                 // First stack
                 .stopAndAdd(transfer.startIntake())
-                .strafeToLinearHeading(new Vector2d(-43,5), Math.toRadians(180))
-                .strafeToLinearHeading(new Vector2d(-44 ,15), Math.toRadians(190))
-                .strafeToLinearHeading(new Vector2d(-44,12), Math.toRadians(180))
-                .strafeToLinearHeading(new Vector2d(-47,12), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-38,5), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+                .strafeToLinearHeading(new Vector2d(-39 ,15), Math.toRadians(190))
+                .strafeToLinearHeading(new Vector2d(-39,12), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-40,12), Math.toRadians(180))
 //                .waitSeconds(0.25)
 //                .strafeToLinearHeading(new Vector2d(-37.5,0), Math.toRadians(180))
 //                .strafeToLinearHeading(new Vector2d(-44,0), Math.toRadians(180))

@@ -53,10 +53,10 @@ public class FarAutoRed extends LinearOpMode {
 
                 // First stack
                 .stopAndAdd(transfer.startIntake())
-                .strafeToLinearHeading(new Vector2d(-43,-5), Math.toRadians(180))
-                .strafeToLinearHeading(new Vector2d(-44 ,-15), Math.toRadians(190))
-                .strafeToLinearHeading(new Vector2d(-44,-12), Math.toRadians(180))
-                .strafeToLinearHeading(new Vector2d(-45,-12), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-38,-5), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-39 ,-15), Math.toRadians(190))
+                .strafeToLinearHeading(new Vector2d(-39,-12), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-40,-12), Math.toRadians(180))
 //                .waitSeconds(0.25)
 //                .strafeToLinearHeading(new Vector2d(-37.5,0), Math.toRadians(180))
 //                .strafeToLinearHeading(new Vector2d(-44,0), Math.toRadians(180))
