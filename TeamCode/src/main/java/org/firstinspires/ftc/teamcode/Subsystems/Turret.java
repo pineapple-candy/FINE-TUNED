@@ -75,9 +75,9 @@
             }
             @Override
             public boolean run(@NonNull TelemetryPacket packet) {
-                if (blueOrLeft) {
+                if (blueOrLeft==true) {
                     setTurretAngle(0.16);
-                } else{
+                } else {
                     setTurretAngle(0.84);
                 }
                 return false;
