@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.OpModes;
 
 import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
+import com.acmerobotics.roadrunner.ProfileAccelConstraint;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.TrajectoryActionBuilder;
+import com.acmerobotics.roadrunner.TranslationalVelConstraint;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -53,7 +55,7 @@ public class FarAutoRed extends LinearOpMode {
 
                 // First stack
                 .stopAndAdd(transfer.startIntake())
-                .strafeToLinearHeading(new Vector2d(-43,-5), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-43,-5), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
                 .strafeToLinearHeading(new Vector2d(-44 ,-15), Math.toRadians(190))
                 .strafeToLinearHeading(new Vector2d(-44,-12), Math.toRadians(180))
                 .strafeToLinearHeading(new Vector2d(-45,-12), Math.toRadians(180))
@@ -64,7 +66,7 @@ public class FarAutoRed extends LinearOpMode {
 //                .strafeToLinearHeading(new Vector2d(-45,-5), Math.toRadians(180))
 //                .waitSeconds(0.25)
                 .stopAndAdd(transfer.stopIntake())
-                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
 
                 // Shoot second
                 .stopAndAdd(hood.farZone())
@@ -83,13 +85,13 @@ public class FarAutoRed extends LinearOpMode {
                 .stopAndAdd(transfer.stopIntake())
 
                 // Go to first stack
-                .strafeToLinearHeading(new Vector2d(-12,-30),Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-12,-30),Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
                 .stopAndAdd(transfer.startIntake())
                 .strafeToLinearHeading(new Vector2d(-45,-30),Math.toRadians(180))
                 .waitSeconds(0.5)
                 .stopAndAdd(transfer.stopIntake())
 
-                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
 
                 // Shoot third
                 .stopAndAdd(hood.farZone())
@@ -109,9 +111,9 @@ public class FarAutoRed extends LinearOpMode {
 
                 // Check for loose balls
                 .stopAndAdd(transfer.startIntake())
-                .strafeToLinearHeading(new Vector2d(-35,0),Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-35,0),Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
                 .waitSeconds(0.5)
-                .strafeToLinearHeading(new Vector2d(0,0),Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(0,0),Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
                 .stopAndAdd(transfer.stopIntake())
 
                 // Shoot fourth
@@ -131,7 +133,7 @@ public class FarAutoRed extends LinearOpMode {
                 .stopAndAdd(transfer.stopIntake())
 
                 // Autobots, roll out!
-                .strafeToLinearHeading(new Vector2d(-20,0),Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-20,0),Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
                 .endTrajectory();
 
         waitForStart();
