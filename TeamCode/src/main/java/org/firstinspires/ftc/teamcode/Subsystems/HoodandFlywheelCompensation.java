@@ -28,7 +28,7 @@ public class HoodandFlywheelCompensation {
     private double dt; // Small difference in time
     public double distance;
     public double turretPos;
-    double RPM_NEAR_TARGET=3800;
+    double RPM_NEAR_TARGET=4300;
 
     private double BASE_FAR_FF = 0.6755; // AT 12.5V
     private double BASE_NEAR_FF = 0.61; // AT 12.5V
@@ -165,7 +165,7 @@ public class HoodandFlywheelCompensation {
             if (!nearHPZone) {
                 GOAL_VECTOR = new Vector2d(-118,-115);
             } else {
-                GOAL_VECTOR = new Vector2d(8,115);
+                GOAL_VECTOR = new Vector2d(8,140);
             }
         } else { // ON BLUE SIDE / NO LAST AUTO SELECTED
             if (!nearHPZone) {
