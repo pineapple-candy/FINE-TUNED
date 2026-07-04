@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.Subsystems.Turret;
 import org.firstinspires.ftc.teamcode.Util.Constants;
 import org.firstinspires.ftc.teamcode.Util.StaticVariables;
 
-@Autonomous(name="Far Zone Red")
+@Autonomous(name="Far Zone Red (Two Stack)")
 public class FarAutoRedTwoStack extends LinearOpMode {
 
     @Override

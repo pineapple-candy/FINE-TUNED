@@ -63,7 +63,7 @@ public class Main extends LinearOpMode {
             double rpm = shooter.getRPM();
             boolean bangbang = shooter.ReturnBangbang();
             drivebase.update(gamepad1,gamepad2);
-            calcs.update(gamepad1, rpm, bangbang);
+            calcs.update(gamepad1, rpm, bangbang, gamepad2);
             double turretpos = calcs.returnTurret();
             double flywheelPower = calcs.returnPower(); // FLYWHEEL POWER calculated here in this class (w/ PIDs) -> fed as an argument into shooter
             double hoodPos = calcs.returnHood(); // Hood positions are calculated in another class -> fed as an ARGUMENT into hood

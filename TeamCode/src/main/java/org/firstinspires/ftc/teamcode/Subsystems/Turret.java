@@ -44,13 +44,13 @@
 
         public void update(Gamepad gamepad, double turretpos){
            if (gamepad.dpad_right&&!dPadUp){
-                turretOffset += 0.005;
+                turretOffset += 0.01;
 //                SECOND_SERVO_OFFSET=SECOND_SERVO_OFFSET+0.025;
                 activated = true;
             }
 
             if (gamepad.dpad_left&&!dPadDown){
-                turretOffset -= 0.005;
+                turretOffset -= 0.01;
             }
 
             if (gamepad.x) {

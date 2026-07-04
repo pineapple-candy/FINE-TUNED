@@ -21,7 +21,7 @@ public class HoodandFlywheelCompensation {
     Telemetry telemetry;
     PID farPID;
     PID nearPID;
-    double TargetRPM=5700;
+    double TargetRPM=4350;
     private long lastTime;
     private VoltageSensor battery;
     private double currentVelocity;
@@ -59,14 +59,14 @@ public class HoodandFlywheelCompensation {
         this.odo = mecanumDrive;
     }
 
-    public void update(Gamepad gamepad, double rpm, boolean bangbang) {
-
+    public void update(Gamepad gamepad, double rpm, boolean bangbang, Gamepad gamepad2) {
+        telemetryUpdate();
         PIDUpdates();
         odo.updatePoseEstimate();
         currentVelocity = rpm;
         boolean bangbangtrue = true;
         turretPos = getTurretPos();
-        if (bangbangtrue = false) {
+        if (bangbangtrue == false) {
             if (nearOrFar()) {
                 flywheelOutput = farPID.calculateOutput(currentVelocity, dt) + voltageCompensation(true);
                 hoodOutput = basePos.Hoodpos(getRange(), true);
@@ -78,7 +78,7 @@ public class HoodandFlywheelCompensation {
                 if (currentVelocity>-TargetRPM){
                     flywheelOutput = 1;
                 } else {
-                    flywheelOutput =0.5;
+                    flywheelOutput =0.2;
                 }
             }
         if (gamepad.y) {
@@ -90,13 +90,13 @@ public class HoodandFlywheelCompensation {
             nearHPZone = false;
         }
 
-        if (gamepad.dpad_up&&!dPadUp){
-            TargetRPM =+ 50;
-        } if (gamepad.dpad_down&&!dPadDown){
-            TargetRPM =+ 50;
+        if (gamepad2.y&&!dPadUp){
+            TargetRPM += 100;
+        } if (gamepad2.a&&!dPadDown){
+            TargetRPM -= 100;
         }
-        dPadDown = gamepad.dpad_down;
-        dPadUp = gamepad.dpad_up;
+        dPadDown = gamepad2.a;
+        dPadUp = gamepad2.y;
 
         telemetry.addData("distance to goal",distance);
         telemetry.addData("coords",odo.localizer.getPose());
@@ -118,6 +118,7 @@ public class HoodandFlywheelCompensation {
     public void telemetryUpdate(){
         telemetry.addData("flywheelPower",flywheelOutput);
         telemetry.addData("hoodPosition", hoodOutput);
+        telemetry.addData("targetrpm", TargetRPM);
     }
 
     public void PIDUpdates(){
@@ -142,13 +143,13 @@ public class HoodandFlywheelCompensation {
         // TODO: TP, you must edit the goal vector positions for RED side. I don't understand what the values mean, so I trust you to edit them. I've tracked if ur on blue/red side tracking already.
         if (sideID == Constants.RED_SHOOT_ID) { // ON RED SIDE
             if (!nearHPZone) {
-                GOAL_VECTOR = new Vector2d(-121,-115);
+                GOAL_VECTOR = new Vector2d(-118,-115);
             } else {
                 GOAL_VECTOR = new Vector2d(8,115);
             }
         } else { // ON BLUE SIDE / NO LAST AUTO SELECTED
             if (!nearHPZone) {
-                GOAL_VECTOR = new Vector2d(-121, 115);
+                GOAL_VECTOR = new Vector2d(-118, 115);
             } else {
                 GOAL_VECTOR = new Vector2d(8, -115);
             }
