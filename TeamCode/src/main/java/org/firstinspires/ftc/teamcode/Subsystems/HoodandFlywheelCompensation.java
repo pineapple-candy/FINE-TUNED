@@ -28,6 +28,7 @@ public class HoodandFlywheelCompensation {
     private double dt; // Small difference in time
     public double distance;
     public double turretPos;
+    double RPM_NEAR_TARGET=3800;
 
     private double BASE_FAR_FF = 0.6755; // AT 12.5V
     private double BASE_NEAR_FF = 0.61; // AT 12.5V
@@ -41,6 +42,9 @@ public class HoodandFlywheelCompensation {
     Vector2d GOAL_VECTOR = new Vector2d(0,0);
 
     double FAR_ZONE_THRESHOLD = 100; // in inches
+    double distancefrfr;
+    boolean leftBumper=true;
+    boolean righBumper=false;
 
     public HoodandFlywheelCompensation(HardwareMap hardwareMap, Telemetry telemetry, MecanumDrive mecanumDrive) {
         this.telemetry = telemetry;
@@ -66,13 +70,20 @@ public class HoodandFlywheelCompensation {
         currentVelocity = rpm;
         boolean bangbangtrue = true;
         turretPos = getTurretPos();
-        if (bangbangtrue == false) {
+        distancefrfr=getRange();
+        if (bangbangtrue) {
             if (nearOrFar()) {
-                flywheelOutput = farPID.calculateOutput(currentVelocity, dt) + voltageCompensation(true);
-                hoodOutput = basePos.Hoodpos(getRange(), true);
+                if (currentVelocity>-TargetRPM){
+                    flywheelOutput = 1;
+                } else {
+                    flywheelOutput =0.2;
+                }
             } else {
-                flywheelOutput = nearPID.calculateOutput(currentVelocity, dt) + voltageCompensation(false);
-                hoodOutput = basePos.Hoodpos(getRange(), false);
+                if (currentVelocity>-RPM_NEAR_TARGET){
+                    flywheelOutput = 1;
+                } else {
+                    flywheelOutput =0.2;
+                }
             }
         } else {
                 if (currentVelocity>-TargetRPM){
@@ -95,12 +106,21 @@ public class HoodandFlywheelCompensation {
         } if (gamepad2.a&&!dPadDown){
             TargetRPM -= 100;
         }
+        if (gamepad2.left_bumper&&!leftBumper){
+            RPM_NEAR_TARGET+=100;
+        } if (gamepad2.right_bumper&&!righBumper){
+            RPM_NEAR_TARGET-=100;
+        }
+        leftBumper = gamepad2.left_bumper;
+        righBumper = gamepad2.right_bumper;
+
         dPadDown = gamepad2.a;
         dPadUp = gamepad2.y;
 
-        telemetry.addData("distance to goal",distance);
+        telemetry.addData("distance to goal",distancefrfr);
         telemetry.addData("coords",odo.localizer.getPose());
         telemetry.addData("Target", farTarget);
+        telemetry.addData("neartarget", RPM_NEAR_TARGET);
 
     }
 
