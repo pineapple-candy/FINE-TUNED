@@ -133,7 +133,7 @@ public class FarAutoRedTwoStack extends LinearOpMode {
                 .stopAndAdd(transfer.stopIntake())
 
                 // Normal ending if the auto reaches this naturally
-                .strafeToLinearHeading(new Vector2d(-20, 0), Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-45, 0), Math.toRadians(180))
                 .endTrajectory();
 
         waitForStart();
@@ -160,7 +160,7 @@ public class FarAutoRedTwoStack extends LinearOpMode {
                         transfer.stopIntake(),
 
                         drive.actionBuilder(drive.localizer.getPose())
-                                .strafeToLinearHeading(new Vector2d(-20, 0), Math.toRadians(180))
+                                .strafeToLinearHeading(new Vector2d(-45, 0), Math.toRadians(180))
                                 .build()
                 )
         );
