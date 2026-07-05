@@ -149,7 +149,7 @@ public class FarAutoBlueTwoStack extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        StaticVariables.setLastId(Constants.RED_SHOOT_ID);
+        StaticVariables.setLastId(Constants.BLUE_SHOOT_ID);
 
         telemetry.addLine("AUTO STARTED");
         telemetry.update();
