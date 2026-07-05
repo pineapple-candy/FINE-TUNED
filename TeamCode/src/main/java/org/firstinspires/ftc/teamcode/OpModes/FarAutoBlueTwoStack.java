@@ -142,14 +142,14 @@ public class FarAutoBlueTwoStack extends LinearOpMode {
                 .stopAndAdd(transfer.stopIntake())
 
                 // Autobots, roll out!
-                .strafeToLinearHeading(new Vector2d(-20,0),Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(-45,0),Math.toRadians(180))
                 .endTrajectory();
 
         waitForStart();
 
         if (isStopRequested()) return;
 
-        StaticVariables.setLastId(Constants.RED_SHOOT_ID);
+        StaticVariables.setLastId(Constants.BLUE_SHOOT_ID);
 
         telemetry.addLine("AUTO STARTED");
         telemetry.update();
@@ -169,7 +169,7 @@ public class FarAutoBlueTwoStack extends LinearOpMode {
                         transfer.stopIntake(),
 
                         drive.actionBuilder(drive.localizer.getPose())
-                                .strafeToLinearHeading(new Vector2d(-20, 0), Math.toRadians(180))
+                                .strafeToLinearHeading(new Vector2d(-45, 0), Math.toRadians(180))
                                 .build()
                 )
         );
