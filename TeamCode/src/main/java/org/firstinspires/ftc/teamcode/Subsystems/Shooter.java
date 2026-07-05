@@ -21,7 +21,7 @@ public class Shooter {
     private DcMotor S1;
     private DcMotor S2;
     private DcMotorEx S1encoder;
-    public boolean shooting = false;
+    public boolean shooting = true;
     boolean alreadypressed;
     double autoFlywheelPower;
     boolean bangbang;

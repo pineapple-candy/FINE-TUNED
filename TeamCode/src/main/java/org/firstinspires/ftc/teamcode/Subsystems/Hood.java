@@ -39,7 +39,7 @@ public class Hood {
 
         double velocityCompensation = 0.0000000015739*rpmCalc*rpmCalc*rpmCalc-0.0000193865*rpmCalc*rpmCalc+0.08003*rpmCalc-110.72053;
 
-        setHoodAngle(hoodPos+hoodOffset);
+        setHoodAngle(0.725+hoodOffset);
 
         if (addOffsetToggle.runToggle(gamepad.dpad_up)){
             hoodOffset += 0.025;

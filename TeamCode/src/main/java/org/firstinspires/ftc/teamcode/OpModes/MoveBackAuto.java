@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.Subsystems.Drivebase;
+import org.firstinspires.ftc.teamcode.Util.Constants;
+import org.firstinspires.ftc.teamcode.Util.StaticVariables;
 
 @Autonomous(name="Move Back Auto")
 public class MoveBackAuto extends LinearOpMode {
@@ -14,9 +16,10 @@ public class MoveBackAuto extends LinearOpMode {
         drivebase = new Drivebase(hardwareMap, telemetry);
 
         waitForStart();
+        StaticVariables.setLastId(Constants.RED_SHOOT_ID);
 
         drivebase.powerMotors(-0.6);
-        sleep(2000);
+        sleep(500);
         drivebase.powerMotors(0);
     }
 }

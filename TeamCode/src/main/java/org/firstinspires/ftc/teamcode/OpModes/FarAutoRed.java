@@ -64,7 +64,8 @@ public class FarAutoRed extends LinearOpMode {
 
                 // First stack
                 .stopAndAdd(transfer.startIntake())
-                .strafeToLinearHeading(new Vector2d(-47,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+                .strafeToLinearHeading(new Vector2d(-37,-7.5), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+                .strafeToLinearHeading(new Vector2d(-47,-7.5), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
 //                .waitSeconds(0.25)
 //                .strafeToLinearHeading(new Vector2d(-37.5,0), Math.toRadians(180))
 //                .strafeToLinearHeading(new Vector2d(-44,0), Math.toRadians(180))
@@ -78,7 +79,7 @@ public class FarAutoRed extends LinearOpMode {
                 .stopAndAdd(hood.farZone())
                 .stopAndAdd(turret.farZone(false))
                 .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
-                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(transfer.new startIntakeFire(0.1))
                 .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
                 .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
@@ -92,6 +93,7 @@ public class FarAutoRed extends LinearOpMode {
 
                 // Go to first stack
                 .strafeToLinearHeading(new Vector2d(-12,-30),Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+
                 .stopAndAdd(transfer.startIntake())
                 .strafeToLinearHeading(new Vector2d(-45,-30),Math.toRadians(180))
                 .waitSeconds(0.5)
