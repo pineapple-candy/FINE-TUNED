@@ -31,7 +31,7 @@ import java.util.function.Supplier;
 @Autonomous(name="Far Zone Blue")
 public class FarAutoBlue extends LinearOpMode {
 
-    private final double SECONDS_AFTER_ABORT = 25;
+    private final double SECONDS_AFTER_ABORT = 30;
 
     @Override
     public void runOpMode() {
@@ -45,9 +45,13 @@ public class FarAutoBlue extends LinearOpMode {
         HoodandFlywheelCompensation calc = new HoodandFlywheelCompensation(hardwareMap, telemetry, drive);
 
         TrajectoryActionBuilder wholeTrajectory = drive.actionBuilder(initialPose)
-                //Shoot first
+
                 .stopAndAdd(hood.farZone())
                 .stopAndAdd(turret.farZone(true))
+
+                //LARP SHOT 1
+                .strafeToLinearHeading(new Vector2d(-25,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+
                 .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
                 .stopAndAdd(transfer.new startIntakeFire(0.3))
                 .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
@@ -60,72 +64,14 @@ public class FarAutoBlue extends LinearOpMode {
                 .stopAndAdd(transfer.new startIntakeFire(1))
                 .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
-
-
-                // First stack
                 .stopAndAdd(transfer.startIntake())
-                .strafeToLinearHeading(new Vector2d(-47,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
-
-//                .waitSeconds(0.25)
-//                .strafeToLinearHeading(new Vector2d(-37.5,0), Math.toRadians(180))
-//                .strafeToLinearHeading(new Vector2d(-44,0), Math.toRadians(180))
-//                .strafeToLinearHeading(new Vector2d(-44,5), Math.toRadians(180))
-//                .strafeToLinearHeading(new Vector2d(-47,5), Math.toRadians(180))
-//                .waitSeconds(0.25)
-                .stopAndAdd(transfer.stopIntake())
-                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
-
-                // Shoot second
-                .stopAndAdd(hood.farZone())
-                .stopAndAdd(turret.farZone(true))
-                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
-                .stopAndAdd(transfer.new startIntakeFire(0.3))
-                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
-                .stopAndAdd(transfer.stopIntake())
-                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
-                .stopAndAdd(transfer.new startIntakeFire(0.3))
-                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
-                .stopAndAdd(transfer.stopIntake())
-                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
-                .stopAndAdd(transfer.new startIntakeFire(1))
-                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
-                .stopAndAdd(transfer.stopIntake())
-
-                // Go to first stack
-                .strafeToLinearHeading(new Vector2d(-12,30),Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
-                .stopAndAdd(transfer.startIntake())
-                .strafeToLinearHeading(new Vector2d(-45,30),Math.toRadians(180))
-                .waitSeconds(0.5)
-                .stopAndAdd(transfer.stopIntake())
 
                 .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
-
-                // Shoot third
-                .stopAndAdd(hood.farZone())
-                .stopAndAdd(turret.farZone(true))
-                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
-                .stopAndAdd(transfer.new startIntakeFire(0.3))
-                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
-                .stopAndAdd(transfer.stopIntake())
-                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
-                .stopAndAdd(transfer.new startIntakeFire(0.3))
-                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
-                .stopAndAdd(transfer.stopIntake())
-                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
-                .stopAndAdd(transfer.new startIntakeFire(1))
-                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
-                .stopAndAdd(transfer.stopIntake())
-
-                // Check for loose balls
-                .stopAndAdd(transfer.startIntake())
-                .strafeToLinearHeading(new Vector2d(-35,0),Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
                 .waitSeconds(0.5)
-                .strafeToLinearHeading(new Vector2d(0,0),Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
-                .stopAndAdd(transfer.stopIntake())
 
-                // Shoot fourth
-                .stopAndAdd(hood.farZone())
-                .stopAndAdd(turret.farZone(true))
+                //LARP SHOT 2
+                .strafeToLinearHeading(new Vector2d(-25,5), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+
                 .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
                 .stopAndAdd(transfer.new startIntakeFire(0.3))
                 .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
@@ -138,9 +84,95 @@ public class FarAutoBlue extends LinearOpMode {
                 .stopAndAdd(transfer.new startIntakeFire(1))
                 .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
                 .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(transfer.startIntake())
 
-                // Autobots, roll out!
-                .strafeToLinearHeading(new Vector2d(-45,0),Math.toRadians(180))
+                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+                .waitSeconds(0.5)
+
+                //LARP SHOT 3
+                .strafeToLinearHeading(new Vector2d(-25,5), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(1))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(transfer.startIntake())
+
+                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+                .waitSeconds(0.5)
+
+
+                //LARP SHOT 4
+                .strafeToLinearHeading(new Vector2d(-25,5), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(1))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(transfer.startIntake())
+
+                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+                .waitSeconds(0.5)
+
+
+                //LARP SHOT 5
+                .strafeToLinearHeading(new Vector2d(-25,5), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(1))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(transfer.startIntake())
+
+                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+                .waitSeconds(0.5)
+
+
+                //LARP SHOT 6
+                .strafeToLinearHeading(new Vector2d(-25,5), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(0.3))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
+                .stopAndAdd(transfer.new startIntakeFire(1))
+                .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
+                .stopAndAdd(transfer.stopIntake())
+                .stopAndAdd(transfer.startIntake())
+
+                .strafeToLinearHeading(new Vector2d(0,5), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+                .waitSeconds(0.5)
+
+
                 .endTrajectory();
 
         waitForStart();
