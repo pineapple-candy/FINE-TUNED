@@ -28,7 +28,7 @@ import org.firstinspires.ftc.teamcode.Util.StaticVariables;
 
 import java.util.function.Supplier;
 
-@Autonomous(name="Far Zone Blue")
+@Autonomous(name="Blue Auto Comp 2")
 public class FarAutoBlue extends LinearOpMode {
 
     private final double SECONDS_AFTER_ABORT = 30;
@@ -49,9 +49,14 @@ public class FarAutoBlue extends LinearOpMode {
                 .stopAndAdd(hood.farZone())
                 .stopAndAdd(turret.farZone(true))
 
-                //LARP SHOT 1
-                .strafeToLinearHeading(new Vector2d(-25,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+                //Intake first bunch
+                .strafeToLinearHeading(new Vector2d(-25,5), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+                .stopAndAdd(transfer.startIntake())
+                .strafeToLinearHeading(new Vector2d(0,0), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
+                .waitSeconds(0.5)
+                .strafeToLinearHeading(new Vector2d(-25,5), Math.toRadians(180), new TranslationalVelConstraint(80), new ProfileAccelConstraint(-50, 80))
 
+                //LARP SHOT 1
                 .stopAndAdd(new AutoPID.waitUntilRPM(shooter))
                 .stopAndAdd(transfer.new startIntakeFire(0.3))
                 .stopAndAdd(new AutoPID.waitUntilRPMDrop(shooter))
